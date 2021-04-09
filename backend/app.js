@@ -1,9 +1,5 @@
 var express = require('express');
 var app = express();
-
-
-
-
 const db = require("./database/db")
 
 db.sequelize.authenticate().then(() => {
@@ -13,5 +9,5 @@ db.sequelize.authenticate().then(() => {
 });
 
 app.listen(3000, function () {
-    console.log('¡Aplicación escuchando en el puerto 3000!');
+  console.log('¡Aplicación escuchando en el puerto 3000!');
 });
