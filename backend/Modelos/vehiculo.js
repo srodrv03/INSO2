@@ -1,37 +1,38 @@
 const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('vehiculo', {
+const db = require("../database/db")
+module.exports = function(sequelize) {
+  return db.sequelize.define('vehiculo', {
     id: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       allowNull: false,
       primaryKey: true
     },
     marca: {
-      type: DataTypes.STRING(50),
+      type: Sequelize.STRING(50),
       allowNull: true
     },
     modelo: {
-      type: DataTypes.STRING(50),
+      type: Sequelize.STRING(50),
       allowNull: true
     },
     anio: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       allowNull: true
     },
     color: {
-      type: DataTypes.STRING(20),
+      type: Sequelize.STRING(20),
       allowNull: true
     },
     puertas: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       allowNull: true
     },
     motor: {
-      type: DataTypes.STRING(20),
+      type: Sequelize.STRING(20),
       allowNull: true
     },
     id_cliente: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       allowNull: true,
       references: {
         model: 'cliente',

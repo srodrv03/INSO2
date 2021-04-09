@@ -1,25 +1,26 @@
 const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('reparacion', {
+const db = require("../database/db")
+module.exports = function(sequelize) {
+  return db.sequelize.define('reparacion', {
     id: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       allowNull: false,
       primaryKey: true
     },
     descripcion: {
-      type: DataTypes.STRING(100),
+      type: Sequelize.STRING(100),
       allowNull: true
     },
     fecha_inicio: {
-      type: DataTypes.DATEONLY,
+      type: Sequelize.DATEONLY,
       allowNull: true
     },
     fecha_fin: {
-      type: DataTypes.DATEONLY,
+      type: Sequelize.DATEONLY,
       allowNull: true
     },
     id_vehiculo: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       allowNull: true,
       references: {
         model: 'vehiculo',
@@ -27,7 +28,7 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     id_empleado: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       allowNull: true,
       references: {
         model: 'empleado',
@@ -35,7 +36,7 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     id_estado: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       allowNull: true,
       references: {
         model: 'estado',
@@ -43,7 +44,7 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     id_reparacion: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       allowNull: true,
       references: {
         model: 'categoria_reparacion',
@@ -51,7 +52,7 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     id_factura: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       allowNull: true,
       references: {
         model: 'factura',

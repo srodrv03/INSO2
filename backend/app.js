@@ -1,10 +1,13 @@
 var express = require('express');
+const Sequelize = require('sequelize');
+const Cliente = require("./Modelos/cliente")
 var app = express();
-
-
-
-
 const db = require("./database/db")
+var bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: false}))
+
+// parse application/json
+app.use(bodyParser.json())
 
 db.sequelize.authenticate().then(() => {
   console.log('Connection has been established successfully.');
@@ -12,6 +15,10 @@ db.sequelize.authenticate().then(() => {
   console.error('Unable to connect to the database:', err);
 });
 
+Cliente().sync()
+
+app.use('/clientes', require('./Rutas/Clientes')); 
+
 app.listen(3000, function () {
-    console.log('¡Aplicación escuchando en el puerto 3000!');
+  console.log('¡Aplicación escuchando en el puerto 3000!');
 });
