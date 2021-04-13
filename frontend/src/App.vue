@@ -56,7 +56,7 @@ export default {
   methods:{
     deslog(){
       this.deslogearse()
-      this.$router.push('/')
+      this.$router.push('/Login')
     },
     ...mapMutations(["deslogearse"])
   }
