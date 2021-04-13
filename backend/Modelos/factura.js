@@ -1,21 +1,22 @@
 const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('factura', {
+const db = require("../database/db")
+module.exports = function(sequelize) {
+  return db.sequelize.define('factura', {
     id: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       allowNull: false,
       primaryKey: true
     },
     fecha: {
-      type: DataTypes.DATEONLY,
+      type: Sequelize.DATEONLY,
       allowNull: true
     },
     impuesto: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       allowNull: true
     },
     importe: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       allowNull: true
     }
   }, {

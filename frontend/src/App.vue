@@ -1,10 +1,6 @@
 <template>
-  <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
+  <v-app :style="color_fondo">
+    <v-app-bar app color="primary" dark>
       <div class="d-flex align-center">
         <v-img
           alt="Vuetify Logo"
@@ -28,33 +24,42 @@
       <v-spacer></v-spacer>
 
       <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
         target="_blank"
         text
+        @click="deslog()"
       >
-        <span class="mr-2">Latest Release</span>
+        <span class="mr-2">Deslog provisional</span>
         <v-icon>mdi-open-in-new</v-icon>
       </v-btn>
     </v-app-bar>
-
-    <v-main>
-      <HelloWorld/>
+    <v-main fluid>
+      <router-view />
     </v-main>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
-
+import {mapMutations } from "vuex";
 export default {
-  name: 'App',
+  name: "App",
 
-  components: {
-    HelloWorld,
-  },
+  components: {},
 
   data: () => ({
     //
   }),
+  computed: {
+    color_fondo() {
+      return "background: rgb(2,0,36);background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);";
+    },
+  },
+  methods:{
+    deslog(){
+      this.deslogearse()
+      this.$router.push('/')
+    },
+    ...mapMutations(["deslogearse"])
+  }
+  
 };
 </script>

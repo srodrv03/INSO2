@@ -1,13 +1,14 @@
 const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('categoria_reparacion', {
+const db = require("../database/db")
+module.exports = function(sequelize) {
+  return db.sequelize.define('categoria_reparacion', {
     id: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       allowNull: false,
       primaryKey: true
     },
     nombre: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       allowNull: true
     }
   }, {

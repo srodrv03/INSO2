@@ -1,17 +1,18 @@
 const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('componente', {
+const db = require("../database/db")
+module.exports = function(sequelize) {
+  return db.sequelize.define('componente', {
     id: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       allowNull: false,
       primaryKey: true
     },
     nombre: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       allowNull: true
     },
     id_reparacion: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       allowNull: true,
       references: {
         model: 'reparacion',
@@ -19,7 +20,7 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     id_categoria: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       allowNull: true,
       references: {
         model: 'categoria_componente',
@@ -27,7 +28,7 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     id_proveedor: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       allowNull: true,
       references: {
         model: 'proveedor',

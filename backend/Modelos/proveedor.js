@@ -1,33 +1,34 @@
 const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('proveedor', {
+const db = require("../database/db")
+module.exports = function(sequelize) {
+  return db.sequelize.define('proveedor', {
     id: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       allowNull: false,
       primaryKey: true
     },
     nombre: {
-      type: DataTypes.STRING(20),
+      type: Sequelize.STRING(20),
       allowNull: true
     },
     telefono: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       allowNull: true
     },
     email: {
-      type: DataTypes.STRING(20),
+      type: Sequelize.STRING(20),
       allowNull: true
     },
     direccion: {
-      type: DataTypes.STRING(50),
+      type: Sequelize.STRING(50),
       allowNull: true
     },
     cp: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       allowNull: true
     },
     localidad: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       allowNull: true
     }
   }, {
