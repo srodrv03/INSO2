@@ -31,7 +31,7 @@ module.exports = function(sequelize) {
       type: Sequelize.INTEGER,
       allowNull: true
     },
-    Email: {
+    email: {
       type: Sequelize.STRING(20),
       allowNull: true
     },

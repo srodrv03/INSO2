@@ -18,6 +18,8 @@ db.sequelize.authenticate().then(() => {
 Cliente().sync()
 
 app.use('/clientes', require('./Rutas/Clientes')); 
+app.use('/empleados', require('./Rutas/Empleados')); 
+
 
 app.listen(3000, function () {
   console.log('¡Aplicación escuchando en el puerto 3000!');

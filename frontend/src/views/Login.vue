@@ -44,6 +44,15 @@
                 @keydown.native.enter="iniciar"
               ></v-text-field>
             </v-row>
+            <v-row xs12 sm6>
+              <v-select
+                dark
+                v-model="tipo_user"
+                prepend-icon="mdi-fingerprint"
+                :items="['Empleado', 'Cliente']"
+                label="Tipo de usuario"
+              ></v-select>
+            </v-row>
             <v-row>
               <v-col xs12 sm6>
                 <v-btn @click="iniciar" color="white" light
@@ -72,6 +81,7 @@ export default {
   name: "Registro",
   data: () => ({
     password: "",
+    tipo_user: "",
     email: "",
     alerta: false,
   }),
@@ -85,24 +95,48 @@ export default {
           email: this.email,
           pass: this.password,
         };
-        console.log(userData)
-        axios.post("http://localhost:3000/clientes/login", userData).then(
-          (response) => {
-            if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
-              this.password = "";
-              this.email = "";
-              this.alerta = true;
-            } else {
-                console.log("entra")
-              this.logearse();
-              this.setEmail(this.email);
-              this.$router.push("/home");
+        if (this.tipo_user == "Cliente") {
+          axios.post("http://localhost:3000/clientes/login", userData).then(
+            (response) => {
+              if (
+                Object.prototype.hasOwnProperty.call(response.data, "error")
+              ) {
+                this.password = "";
+                this.email = "";
+                this.alerta = true;
+              } else {
+                console.log("entra");
+                this.logearse();
+                this.setEmail(this.email);
+                this.$router.push("/home");
+              }
+            },
+            (error) => {
+              console.log(error);
             }
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
+          );
+        }else{
+          axios.post("http://localhost:3000/empleados/login", userData).then(
+            (response) => {
+              if (
+                Object.prototype.hasOwnProperty.call(response.data, "error")
+              ) {
+                this.password = "";
+                this.email = "";
+                this.alerta = true;
+              } else {
+                console.log("entra");
+                this.logearse();
+                this.setEmail(this.email);
+                this.$router.push("/home");
+              }
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+
+        }
       }
     },
     ...mapMutations(["logearse", "setEmail"]),
