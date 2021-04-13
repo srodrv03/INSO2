@@ -4,7 +4,7 @@ module.exports = function(sequelize) {
   const cliente= db.sequelize.define('cliente', {
     id: {
       type: Sequelize.INTEGER,
-      allowNull: false,
+      allowNull: true,
       primaryKey: true
     },
     nombre: {

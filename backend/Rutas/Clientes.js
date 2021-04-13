@@ -41,7 +41,7 @@ router.post('/registro', (req,res) => {
         if(!user) {
             const hash = bcrypt.hashSync(userData.password, 10)
             userData.password = hash
-            User.create(userData).then(user => {
+            Cliente().create(userData).then(user => {
                 res.json({ correcto: "Usuario añadido correctamente"})
             }).catch(err => {
                 res.json( {error:  err})
