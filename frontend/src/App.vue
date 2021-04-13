@@ -24,11 +24,11 @@
       <v-spacer></v-spacer>
 
       <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
         target="_blank"
         text
+        @click="deslog()"
       >
-        <span class="mr-2">Latest Release</span>
+        <span class="mr-2">Deslog provisional</span>
         <v-icon>mdi-open-in-new</v-icon>
       </v-btn>
     </v-app-bar>
@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import {mapMutations } from "vuex";
 export default {
   name: "App",
 
@@ -52,5 +53,13 @@ export default {
       return "background: rgb(2,0,36);background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);";
     },
   },
+  methods:{
+    deslog(){
+      this.deslogearse()
+      this.$router.push('/')
+    },
+    ...mapMutations(["deslogearse"])
+  }
+  
 };
 </script>

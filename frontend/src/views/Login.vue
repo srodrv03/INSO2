@@ -10,9 +10,7 @@
           <v-alert dismissible type="error" v-if="alerta">
             <v-row>
               <v-col>
-                <span class="font-weight-black"
-                  >La contraseña/email no son correctos.</span
-                >
+                <span class="font-weight-black">{{ this.alerta_msg }}</span>
               </v-col>
             </v-row>
           </v-alert>
@@ -83,14 +81,15 @@ export default {
     password: "",
     tipo_user: "",
     email: "",
+    alerta_msg: "",
     alerta: false,
   }),
   computed: {
-    ...mapState(["logged", "emailUsuario"]),
+    ...mapState(["logged", "emailUsuario", "tipoUsuario"]),
   },
   methods: {
     iniciar() {
-      if (this.email != "" && this.password != "") {
+      if (this.email != "" && this.password != "" && this.tipo_user != "") {
         const userData = {
           email: this.email,
           pass: this.password,
@@ -103,11 +102,13 @@ export default {
               ) {
                 this.password = "";
                 this.email = "";
+
+                this.alerta_msg = "La contraseña/email no son correctos.";
                 this.alerta = true;
               } else {
-                console.log("entra");
                 this.logearse();
                 this.setEmail(this.email);
+                this.setTipo(this.tipo_user);
                 this.$router.push("/home");
               }
             },
@@ -115,7 +116,7 @@ export default {
               console.log(error);
             }
           );
-        }else{
+        } else {
           axios.post("http://localhost:3000/empleados/login", userData).then(
             (response) => {
               if (
@@ -123,11 +124,12 @@ export default {
               ) {
                 this.password = "";
                 this.email = "";
+                this.alerta_msg = "La contraseña/email no son correctos.";
                 this.alerta = true;
               } else {
-                console.log("entra");
                 this.logearse();
                 this.setEmail(this.email);
+                this.setTipo(this.tipo_user);
                 this.$router.push("/home");
               }
             },
@@ -135,11 +137,13 @@ export default {
               console.log(error);
             }
           );
-
         }
+      } else {
+        this.alerta_msg = "Complete todos los campos";
+        this.alerta = true;
       }
     },
-    ...mapMutations(["logearse", "setEmail"]),
+    ...mapMutations(["logearse", "setEmail", "setTipo"]),
   },
 };
 </script>

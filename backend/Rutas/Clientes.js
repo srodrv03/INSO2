@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const cors = require("cors")
-
+const bcrypt = require("bcrypt")
 const db = require("../database/db")
 const Cliente = require("../Modelos/cliente")
 router.use(cors())
@@ -13,7 +13,7 @@ router.post("/login", (req, res) => {
             Email: req.body.email
         }
     }).then(user => {
-        if (req.body.pass == user.password) {
+        if(bcrypt.compareSync(req.body.pass, user.password)) {
             res.json({ autorizacion: "correcto" })
         }
         else {
