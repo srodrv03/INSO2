@@ -23,7 +23,29 @@ const routes = [
       hideForAuth: true
     }
 
-  },
+  },{
+    path: '/HomeCliente',
+    name: 'HomeCliente',
+    component: () => import('../views/HomeCliente.vue'),
+    meta: {
+      hideForAuth: false
+    }
+  },{
+    path: '/HomeEmpleado',
+    name: 'HomeEmpleado',
+    component: () => import('../views/HomeEmpleado.vue'),
+    meta: {
+      hideForAuth: true
+    }
+  },{
+    path: '/HomeAdministrador',
+    name: 'HomeAdministrador',
+    component: () => import('../views/HomeAdmin.vue'),
+    meta: {
+      hideForAuth: true
+    }
+
+  }
 ] 
 
 const router = new VueRouter({
