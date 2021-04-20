@@ -47,7 +47,7 @@
                 dark
                 v-model="tipo_user"
                 prepend-icon="mdi-fingerprint"
-                :items="['Empleado', 'Cliente']"
+                :items="['Empleado', 'Cliente','Administrador']"
                 label="Tipo de usuario"
               ></v-select>
             </v-row>
@@ -116,7 +116,7 @@ export default {
               console.log(error);
             }
           );
-        } else {
+        } else if(this.tipo_user == "Empleado"){
           axios.post("http://localhost:3000/empleados/login", userData).then(
             (response) => {
               if (
@@ -137,6 +137,29 @@ export default {
               console.log(error);
             }
           );
+        }else{
+          axios.post("http://localhost:3000/empleados/loginAdmin", userData).then(
+            (response) => {
+              if (
+                Object.prototype.hasOwnProperty.call(response.data, "error")
+              ) {
+                this.password = "";
+                this.email = "";
+                this.alerta_msg = "La contraseña/email no son correctos.";
+                this.alerta = true;
+              } else {
+                this.logearse();
+                this.setEmail(this.email);
+                this.setTipo(this.tipo_user);
+                //modificar ruta
+                this.$router.push("/home");
+              }
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+
         }
       } else {
         this.alerta_msg = "Complete todos los campos";
