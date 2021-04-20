@@ -3,6 +3,7 @@ const router = express.Router()
 const cors = require("cors")
 const db = require("../database/db")
 const Empleado = require("../Modelos/empleado")
+const Admin = require("../Modelos/admin")
 router.use(cors())
 
 //loggin
@@ -22,7 +23,27 @@ router.post("/login", (req, res) => {
         res.json({ error: err })
     })
 })
+//Login del addmin
+router.post("/loginAdmin", (req, res) => {
+    Admin().findOne({
+        where: {
+            
+            email: req.body.email
+        }
+    }).then(user => {
+        if (req.body.pass == user.password) {
+            
+            res.json({ autorizacion: "correcto" })
+        }
+        else {
 
+            res.json({ error: "Datos incorrectos" })
+        }
+    }).catch(err => {
+        console.log(err)
+        res.json({ error: err })
+    })
+})
 //REGISTRO
 router.post('/registro', (req, res) => {
     const userData = {
