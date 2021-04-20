@@ -8,8 +8,8 @@ module.exports = function(sequelize) {
       primaryKey: true
     },
     email: {
-      type: Sequelize.STRING(45),
-      allowNull: true
+      type: Sequelize.STRING(50),
+      allowNull: false
     },
     password: {
         type: Sequelize.STRING(255),

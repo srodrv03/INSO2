@@ -27,6 +27,7 @@ router.post("/login", (req, res) => {
 router.post("/loginAdmin", (req, res) => {
     Admin().findOne({
         where: {
+            
             email: req.body.email
         }
     }).then(user => {
