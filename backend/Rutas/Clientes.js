@@ -10,7 +10,7 @@ router.use(cors())
 router.post("/login", (req, res) => {
     Cliente().findOne({
         where: {
-            Email: req.body.email
+            email: req.body.email
         }
     }).then(user => {
         if(bcrypt.compareSync(req.body.pass, user.password)) {
@@ -22,5 +22,35 @@ router.post("/login", (req, res) => {
     }).catch(err => {
         res.json({ error: err })
     })
+})
+
+//REGISTRO
+router.post('/registro', (req,res) => {
+    const userData = {
+        nombre : req.body.nombre,
+        apellidos: req.body.apellidos,
+        email: req.body.email,
+        password: req.body.pass
+    }
+
+    Cliente().findOne({
+        where: {
+            email: req.body.email
+        }
+    }).then(user => {
+        if(!user) {
+            const hash = bcrypt.hashSync(userData.password, 10)
+            userData.password = hash
+            Cliente().create(userData).then(user => {
+                res.json({ correcto: "Usuario añadido correctamente"})
+            }).catch(err => {
+                res.json( {error:  err})
+            })
+        }else{
+            res.json({ error: "El usuario ya estaba añadido"})
+        }
+    })
+
+
 })
 module.exports = router

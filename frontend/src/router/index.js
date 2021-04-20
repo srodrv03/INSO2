@@ -7,9 +7,18 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
+    path: '/Login',
     name: 'Inicio',
     component: () => import('../views/Login.vue'),
+    meta: {
+      hideForAuth: true
+    }
+
+  },
+  {
+    path: '/Registro',
+    name: 'Registro',
+    component: () => import('../views/Registro.vue'),
     meta: {
       hideForAuth: true
     }
