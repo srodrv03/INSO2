@@ -1,12 +1,37 @@
 <template>
   <v-main>
+    <v-row justify="center">
+          <v-alert dismissible :type=tipo_alerta v-if="alerta">
+            <v-row>
+              <v-col>
+                <span class="font-weight-black">{{ this.alerta_msg }}</span>
+              </v-col>
+            </v-row>
+          </v-alert>
+        </v-row>
     <v-row class="text-center" justify="center">
       <v-col class="mb-4" cols="10">
         <v-card>
+          <v-card-title>
+            Empleados
+            <v-spacer></v-spacer>
+            <v-text-field
+              v-model="searchEmpleados"
+              append-icon="mdi-magnify"
+              label="Introduce el nombre del empleado..."
+              single-line
+              hide-details
+            ></v-text-field>
+            <v-spacer></v-spacer>
+            <v-btn color="green" @click="addEmpleado()"
+              >Añadir Empleado</v-btn
+            >
+          </v-card-title>
           <v-data-table
             dense
             :headers="cabeceraEmpleados"
             :items="listaEmpleados"
+            :search='searchEmpleados'
             item-key="name"
             class="elevation-1"
           >
@@ -26,10 +51,26 @@
     <v-row class="text-center" justify="center">
       <v-col class="mb-4" cols="10">
         <v-card>
+          <v-card-title>
+            Clientes
+            <v-spacer></v-spacer>
+            <v-text-field
+              v-model="searchCliente"
+              append-icon="mdi-magnify"
+              label="Introduce el nombre del cliente..."
+              single-line
+              hide-details
+            ></v-text-field>
+            <v-spacer></v-spacer>
+            <v-btn color="green" @click="addCliente()"
+              >Añadir Cliente</v-btn
+            >
+          </v-card-title>
           <v-data-table
             dense
             :headers="cabeceraClientes"
             :items="listaClientes"
+            :search="searchCliente"
             item-key="name"
             class="elevation-1"
           >
@@ -49,10 +90,26 @@
     <v-row class="text-center" justify="center">
       <v-col class="mb-4" cols="10">
         <v-card>
+          <v-card-title>
+            Vehiculos
+            <v-spacer></v-spacer>
+            <v-text-field
+              v-model="searchVehiculo"
+              append-icon="mdi-magnify"
+              label="Introduce el modelo del Vehiculo..."
+              single-line
+              hide-details
+            ></v-text-field>
+            <v-spacer></v-spacer>
+            <v-btn color="green" @click="addCliente()"
+              >Añadir Vehiculo</v-btn
+            >
+          </v-card-title>
           <v-data-table
             dense
             :headers="cabeceraVehiculos"
             :items="listaVehiculos"
+            :search="searchVehiculo"
             item-key="name"
             class="elevation-1"
           >
@@ -82,7 +139,7 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="red" text @click="dialog = false">Cancelar</v-btn>
-            <v-btn color="green" text @click="confirmarEliminacion(tipo)"
+            <v-btn color="green" text @click="confirmarEliminacion(tipo,elemento)"
               >Confirmar</v-btn
             >
           </v-card-actions>
@@ -92,39 +149,24 @@
   </v-main>
 </template>
 <script>
+const axios = require("axios");
 export default {
   data: () => ({
     dialog: false,
+    elemento:"",
+    tipo_alerta:"",
+    alerta:false,
+    alerta_msg:"",
     tipo: "",
     prueba: "",
     tab_activa: "",
     textoDialog: "",
-    listaEmpleados: [
-      {
-        nombre: "prueba",
-        apellido1: "apellido11",
-        apellido2: "apellido22",
-        DNI: "71717171717",
-        email: "e@e.es",
-      },
-    ],
-    listaClientes: [
-      {
-        nombre: "prueba",
-        apellido1: "apellido11",
-        apellido2: "apellido22",
-        DNI: "71717171717",
-        email: "e@e.es",
-      },
-    ],
-    listaVehiculos: [
-      {
-        modelo: "prueba",
-        marca: "apellido11",
-        anio: "71717171717",
-        id_cliente: "e@e.es",
-      },
-    ],
+    searchEmpleados:"",
+    listaEmpleados: [],
+    searchCliente:"",
+    listaClientes: [],
+    searchVehiculo:"",
+    listaVehiculos: [],
     cabeceraEmpleados: [
       {
         text: "ID",
@@ -167,6 +209,9 @@ export default {
       { text: "", value: "borrarButton" },
     ],
   }),
+  mounted: function(){
+    this.obtenerEmpleados()
+  },
   methods: {
     creaDialogDelete(item, numtabla) {
       //esta seleccionada empleado
@@ -181,6 +226,7 @@ export default {
           item.apellido2 +
           "?";
         this.tipo = 0;
+        this.elemento=item
         this.dialog = true;
       } else if (numtabla == "1") {
         this.textoDialog =
@@ -211,14 +257,14 @@ export default {
         if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
           console.log(response.data);
         } else {
-          for (var i of Object.keys(response.data.empleados)) {
-            this.listaEmpleados.push(response.data.empleados[i]);
+          for (var i of Object.keys(response.data)) {
+            this.listaEmpleados.push(response.data[i]);
           }
         }
       });
     },
     obtenerClientes() {
-      axios.get("http://localhost:3000/empleados/listado").then((response) => {
+      axios.get("http://localhost:3000/clientes/listado").then((response) => {
         if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
           console.log(response.data);
         } else {
@@ -239,25 +285,31 @@ export default {
         }
       });
     },
-    confirmarEliminacion(tipo) {
+    confirmarEliminacion(tipo,elemento) {
       if (tipo == 0) {
-        axios.get("http://localhost:3000/empleados/delete").then((response) => {
+        const userData ={
+            email: elemento.email
+        }
+        
+      axios.post("http://localhost:3000/empleados/delete",userData).then((response) => {
           if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
-            console.log(response.data);
+            this.alerta_msg= response.data.error
+            this.tipo_alerta="error"
+            this.alerta=true
           } else {
-            for (var i of Object.keys(response.data.vehiculos)) {
-              this.listaVehiculos.push(response.data.vehiculos[i]);
-            }
+            this.alerta_msg= response.data.correcto
+            this.tipo_alerta="success"
+            this.alerta=true
           }
-        });
+          this.listaEmpleados=[]
+          this.obtenerEmpleados()
+        })
       } else if (tipo == 1) {
         axios.get("http://localhost:3000/clientes/delete").then((response) => {
           if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
             console.log(response.data);
           } else {
-            for (var i of Object.keys(response.data.vehiculos)) {
-              this.listaVehiculos.push(response.data.vehiculos[i]);
-            }
+            
           }
         });
       } else if (tipo == 2) {
@@ -265,12 +317,11 @@ export default {
           if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
             console.log(response.data);
           } else {
-            for (var i of Object.keys(response.data.vehiculos)) {
-              this.listaVehiculos.push(response.data.vehiculos[i]);
-            }
+            
           }
         });
       }
+      this.dialog=false
     },
   },
 };

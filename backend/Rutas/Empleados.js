@@ -27,12 +27,12 @@ router.post("/login", (req, res) => {
 router.post("/loginAdmin", (req, res) => {
     Admin().findOne({
         where: {
-            
+
             email: req.body.email
         }
     }).then(user => {
         if (req.body.pass == user.password) {
-            
+
             res.json({ autorizacion: "correcto" })
         }
         else {
@@ -71,4 +71,37 @@ router.post('/registro', (req, res) => {
         }
     })
 })
+router.get('/listado', (req, res) => {
+
+    Empleado().findAll({
+
+    }).then(async (empleados) => {
+        if (empleados) {
+            res.json(empleados)
+        } else {
+            console.log("error")
+        }
+    })
+})
+
+
+router.post('/delete', (req, res) => {
+    const userData = {
+        email: req.body.email,
+    }
+
+    Empleado().destroy({
+        where: {
+            email: req.body.email
+        }
+    }).then(respuesta => {
+        if(respuesta==1){
+            res.json({ correcto: "Empleado eliminado correctamente" })
+        }else{
+            res.json({ error: "No se ha podido eliminar al empleado" })
+        }
+
+    })
+})
+
 module.exports = router
