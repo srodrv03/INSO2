@@ -12,7 +12,7 @@
           >
             <template v-slot:item.borrarButton="{ item }">
               <v-btn
-                @click="creaDialogDelete(item,0)"
+                @click="creaDialogDelete(item, 0)"
                 color="red"
                 small
                 v-model="item.borrarButton"
@@ -35,7 +35,7 @@
           >
             <template v-slot:item.borrarButton="{ item }">
               <v-btn
-                @click="creaDialogDelete(item,1)"
+                @click="creaDialogDelete(item, 1)"
                 color="red"
                 small
                 v-model="item.borrarButton"
@@ -55,11 +55,10 @@
             :items="listaVehiculos"
             item-key="name"
             class="elevation-1"
-
           >
             <template v-slot:item.borrarButton="{ item }">
               <v-btn
-                @click="creaDialogDelete(item,2)"
+                @click="creaDialogDelete(item, 2)"
                 color="red"
                 small
                 v-model="item.borrarButton"
@@ -96,8 +95,8 @@
 export default {
   data: () => ({
     dialog: false,
-    tipo:"",
-    prueba:"",
+    tipo: "",
+    prueba: "",
     tab_activa: "",
     textoDialog: "",
     listaEmpleados: [
@@ -169,7 +168,7 @@ export default {
     ],
   }),
   methods: {
-    creaDialogDelete(item,numtabla) {
+    creaDialogDelete(item, numtabla) {
       //esta seleccionada empleado
       console.log(numtabla);
       if (numtabla == "0") {
@@ -181,7 +180,7 @@ export default {
           " " +
           item.apellido2 +
           "?";
-        this.tipo=0
+        this.tipo = 0;
         this.dialog = true;
       } else if (numtabla == "1") {
         this.textoDialog =
@@ -193,8 +192,8 @@ export default {
           item.apellido2 +
           "? \n Esto eliminara tambien todos sus vehiculos";
         this.dialog = true;
-        this.tipo=1
-      }else if(numtabla=="2"){
+        this.tipo = 1;
+      } else if (numtabla == "2") {
         this.textoDialog =
           "¿Esta seguro que desea eliminar al El vehiculo " +
           item.marca +
@@ -204,8 +203,7 @@ export default {
           item.matricula +
           "? \n Esto eliminara tambien todas sus reparaciones";
         this.dialog = true;
-        this.tipo=2
-
+        this.tipo = 2;
       }
     },
     obtenerEmpleados() {
@@ -214,7 +212,7 @@ export default {
           console.log(response.data);
         } else {
           for (var i of Object.keys(response.data.empleados)) {
-            this.elementos.push(response.data.empleados[i]);
+            this.listaEmpleados.push(response.data.empleados[i]);
           }
         }
       });
@@ -224,8 +222,8 @@ export default {
         if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
           console.log(response.data);
         } else {
-          for (var i of Object.keys(response.data.empleados)) {
-            this.elementos.push(response.data.empleados[i]);
+          for (var i of Object.keys(response.data.clientes)) {
+            this.listaClientes.push(response.data.clientes[i]);
           }
         }
       });
@@ -235,15 +233,44 @@ export default {
         if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
           console.log(response.data);
         } else {
-          for (var i of Object.keys(response.data.empleados)) {
-            this.elementos.push(response.data.empleados[i]);
+          for (var i of Object.keys(response.data.vehiculos)) {
+            this.listaVehiculos.push(response.data.vehiculos[i]);
           }
         }
       });
     },
     confirmarEliminacion(tipo) {
-      console.log("el tipo es"+tipo);
-
+      if (tipo == 0) {
+        axios.get("http://localhost:3000/empleados/delete").then((response) => {
+          if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
+            console.log(response.data);
+          } else {
+            for (var i of Object.keys(response.data.vehiculos)) {
+              this.listaVehiculos.push(response.data.vehiculos[i]);
+            }
+          }
+        });
+      } else if (tipo == 1) {
+        axios.get("http://localhost:3000/clientes/delete").then((response) => {
+          if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
+            console.log(response.data);
+          } else {
+            for (var i of Object.keys(response.data.vehiculos)) {
+              this.listaVehiculos.push(response.data.vehiculos[i]);
+            }
+          }
+        });
+      } else if (tipo == 2) {
+        axios.get("http://localhost:3000/vehiculos/delete").then((response) => {
+          if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
+            console.log(response.data);
+          } else {
+            for (var i of Object.keys(response.data.vehiculos)) {
+              this.listaVehiculos.push(response.data.vehiculos[i]);
+            }
+          }
+        });
+      }
     },
   },
 };
