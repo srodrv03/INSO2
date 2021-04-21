@@ -1,16 +1,16 @@
 <template>
-
   <v-app>
-    <Navbar></Navbar>
-
+    <Navbar />
+    <EditarUsuario/>
   </v-app>
 </template>
 
 <script>
 import Navbar from "@/components/Navbar";
+import EditarUsuario from "@/components/EditarUsuario";
 export default {
   name: "App",
-  components: { Navbar },
+  components: { Navbar, EditarUsuario},
   data() {
     return {};
   },

@@ -46,6 +46,30 @@ const routes = [
     }
 
   }
+  ,{
+    path: '/HomeCliente/Vehiculos',
+    name: 'HomeAdministrador',
+    component: () => import('../views/Vehiculos.vue'),
+    meta: {
+      hideForAuth: true
+    }
+  }
+  ,{
+    path: '/HomeCliente/Reparaciones',
+    name: 'HomeAdministrador',
+    component: () => import('../views/Reparaciones.vue'),
+    meta: {
+      hideForAuth: true
+    }
+  }
+  ,{
+    path: '/HomeCliente/cuenta',
+    name: 'HomeAdministrador',
+    component: () => import('../views/Cuenta.vue'),
+    meta: {
+      hideForAuth: true
+    }
+  }
 ] 
 
 const router = new VueRouter({

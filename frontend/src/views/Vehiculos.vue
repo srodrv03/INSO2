@@ -1,16 +1,16 @@
 <template>
-
   <v-app>
-    <Navbar></Navbar>
-
+    <Navbar />
+        <ListaVehiculos/>
   </v-app>
 </template>
 
 <script>
 import Navbar from "@/components/Navbar";
+import ListaVehiculos from "@/components/ListaVehiculos";
 export default {
   name: "App",
-  components: { Navbar },
+  components: { Navbar, ListaVehiculos},
   data() {
     return {};
   },
