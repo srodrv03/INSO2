@@ -64,7 +64,7 @@
             <v-spacer></v-spacer>
             <router-link to="/AddCliente" tag="button"
                   ><v-btn color="green" light
-                    >AñadirCliente</v-btn
+                    >Añadir Cliente</v-btn
                   ></router-link
                 >
           </v-card-title>
@@ -174,7 +174,7 @@ export default {
         text: "ID",
         align: "start",
         sortable: true,
-        value: "Id",
+        value: "id",
       },
       { text: "Nombre", value: "nombre" },
       { text: "Primer Apellido", value: "apellido1" },
@@ -188,7 +188,7 @@ export default {
         text: "ID",
         align: "start",
         sortable: true,
-        value: "Id",
+        value: "id",
       },
       { text: "Nombre", value: "nombre" },
       { text: "Primer Apellido", value: "apellido1" },
@@ -212,7 +212,8 @@ export default {
     ],
   }),
   mounted: function(){
-    this.obtenerEmpleados()
+    this.obtenerEmpleados(),
+    this.obtenerClientes()
   },
   methods: {
     creaDialogDelete(item, numtabla) {
@@ -259,6 +260,7 @@ export default {
         if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
           console.log(response.data);
         } else {
+          console.log(response.data);
           for (var i of Object.keys(response.data)) {
             this.listaEmpleados.push(response.data[i]);
           }
@@ -268,10 +270,11 @@ export default {
     obtenerClientes() {
       axios.get("http://localhost:3000/clientes/listado").then((response) => {
         if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
-          console.log(response.data);
+          console.log(response.data)
         } else {
-          for (var i of Object.keys(response.data.clientes)) {
-            this.listaClientes.push(response.data.clientes[i]);
+    
+          for (var i of Object.keys(response.data)) {
+            this.listaClientes.push(response.data[i]);
           }
         }
       });

@@ -50,7 +50,16 @@ router.post('/registro', (req,res) => {
             res.json({ error: "El usuario ya estaba añadido"})
         }
     })
+})
+router.get("/listado", (req,res)=> {
+    Cliente().findAll({
 
-
+    }).then(async (clientes) =>{
+        if(clientes){
+            res.json(clientes)
+        }else{
+            console.log("Error al consultar el listado de los clientes")
+        }
+    })
 })
 module.exports = router
