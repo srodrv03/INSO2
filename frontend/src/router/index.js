@@ -45,6 +45,14 @@ const routes = [
       hideForAuth: true
     }
 
+  },{
+    path: '/AddCliente',
+    name: 'AddCliente',
+    component: () => import('../views/AddCliente.vue'),
+    meta: {
+      hideForAuth: true
+    }
+
   }
 ] 
 

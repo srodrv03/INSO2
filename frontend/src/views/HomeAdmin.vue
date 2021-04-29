@@ -62,9 +62,11 @@
               hide-details
             ></v-text-field>
             <v-spacer></v-spacer>
-            <v-btn color="green" @click="addCliente()"
-              >Añadir Cliente</v-btn
-            >
+            <router-link to="/AddCliente" tag="button"
+                  ><v-btn color="green" light
+                    >AñadirCliente</v-btn
+                  ></router-link
+                >
           </v-card-title>
           <v-data-table
             dense
@@ -308,17 +310,13 @@ export default {
         axios.get("http://localhost:3000/clientes/delete").then((response) => {
           if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
             console.log(response.data);
-          } else {
-            
           }
         });
       } else if (tipo == 2) {
         axios.get("http://localhost:3000/vehiculos/delete").then((response) => {
           if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
             console.log(response.data);
-          } else {
-            
-          }
+          } 
         });
       }
       this.dialog=false
