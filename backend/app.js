@@ -19,6 +19,7 @@ Cliente().sync()
 
 app.use('/clientes', require('./Rutas/Clientes')); 
 app.use('/empleados', require('./Rutas/Empleados')); 
+app.use('/vehiculos', require('./Rutas/Vehiculos')); 
 
 
 app.listen(3000, function () {

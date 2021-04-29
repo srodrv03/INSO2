@@ -39,6 +39,7 @@
               <v-btn
                 @click="creaDialogDelete(item, 0)"
                 color="red"
+                style="width:80px; height:22px"
                 small
                 v-model="item.borrarButton"
                 >Eliminar</v-btn
@@ -81,6 +82,7 @@
                 @click="creaDialogDelete(item, 1)"
                 color="red"
                 small
+                style="width:80px; height:22px"
                 v-model="item.borrarButton"
                 >Eliminar</v-btn
               >
@@ -120,6 +122,7 @@
                 @click="creaDialogDelete(item, 2)"
                 color="red"
                 small
+                style="width:80px; height:22px"
                 v-model="item.borrarButton"
                 >Eliminar</v-btn
               >
@@ -213,7 +216,8 @@ export default {
   }),
   mounted: function(){
     this.obtenerEmpleados(),
-    this.obtenerClientes()
+    this.obtenerClientes(),
+    this.obtenerVehiculos()
   },
   methods: {
     creaDialogDelete(item, numtabla) {
@@ -260,7 +264,6 @@ export default {
         if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
           console.log(response.data);
         } else {
-          console.log(response.data);
           for (var i of Object.keys(response.data)) {
             this.listaEmpleados.push(response.data[i]);
           }
@@ -284,8 +287,8 @@ export default {
         if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
           console.log(response.data);
         } else {
-          for (var i of Object.keys(response.data.vehiculos)) {
-            this.listaVehiculos.push(response.data.vehiculos[i]);
+          for (var i of Object.keys(response.data)) {
+            this.listaVehiculos.push(response.data[i]);
           }
         }
       });
