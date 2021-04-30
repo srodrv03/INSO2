@@ -205,10 +205,11 @@ export default {
         text: "ID",
         align: "start",
         sortable: true,
-        value: "Id",
+        value: "id",
       },
       { text: "Marca", value: "marca" },
       { text: "Modelo", value: "modelo" },
+      { text: "Matricula", value: "matricula"},
       { text: "Año de matriculacion", value: "anio" },
       { text: "Propietario", value: "id_cliente" },
       { text: "", value: "borrarButton" },
@@ -222,7 +223,6 @@ export default {
   methods: {
     creaDialogDelete(item, numtabla) {
       //esta seleccionada empleado
-      console.log(numtabla);
       if (numtabla == "0") {
         this.textoDialog =
           "¿Esta seguro que desea eliminar al Empleado " +
@@ -244,6 +244,7 @@ export default {
           " " +
           item.apellido2 +
           "? \n Esto eliminara tambien todos sus vehiculos";
+        this.elemento=item
         this.dialog = true;
         this.tipo = 1;
       } else if (numtabla == "2") {
@@ -255,6 +256,7 @@ export default {
           " " +
           item.matricula +
           "? \n Esto eliminara tambien todas sus reparaciones";
+        this.elemento=item
         this.dialog = true;
         this.tipo = 2;
       }
@@ -313,16 +315,41 @@ export default {
           this.obtenerEmpleados()
         })
       } else if (tipo == 1) {
-        axios.get("http://localhost:3000/clientes/delete").then((response) => {
+        const userData ={
+            email: elemento.email
+        }
+        
+      axios.post("http://localhost:3000/clientes/delete",userData).then((response) => {
           if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
-            console.log(response.data);
+            this.alerta_msg= response.data.error
+            this.tipo_alerta="error"
+            this.alerta=true
+          } else {
+            this.alerta_msg= response.data.correcto
+            this.tipo_alerta="success"
+            this.alerta=true
           }
+          this.listaClientes=[]
+          this.obtenerClientes()
+          this.listaVehiculos=[]
+          this.obtenerVehiculos()
         });
       } else if (tipo == 2) {
-        axios.get("http://localhost:3000/vehiculos/delete").then((response) => {
+        const vehiculoData ={
+            matricula: elemento.matricula
+        }
+        axios.post("http://localhost:3000/vehiculos/delete",vehiculoData).then((response) => {
           if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
-            console.log(response.data);
-          } 
+            this.alerta_msg= response.data.error
+            this.tipo_alerta="error"
+            this.alerta=true
+          } else {
+            this.alerta_msg= response.data.correcto
+            this.tipo_alerta="success"
+            this.alerta=true
+          }
+          this.listaVehiculos=[]
+          this.obtenerVehiculos()
         });
       }
       this.dialog=false

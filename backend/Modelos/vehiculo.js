@@ -15,6 +15,10 @@ module.exports = function(sequelize) {
       type: Sequelize.STRING(50),
       allowNull: true
     },
+    matricula: {
+      type: Sequelize.STRING(45),
+      allowNull: true
+    },
     anio: {
       type: Sequelize.INTEGER,
       allowNull: true
@@ -39,7 +43,8 @@ module.exports = function(sequelize) {
         key: 'id'
       }
     }
-  }, {
+  }, 
+  {
     sequelize,
     tableName: 'vehiculo',
     timestamps: false,

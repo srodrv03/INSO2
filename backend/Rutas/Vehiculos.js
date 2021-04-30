@@ -16,4 +16,19 @@ router.get("/listado", (req,res)=>{
         }
     })
 })
+router.post("/delete", (req, res) => {
+    console.log(req.body)
+    Vehiculo().destroy({
+        where: {
+            matricula: req.body.matricula
+        }
+    }).then(respuesta => {
+        if(respuesta==1){
+            res.json({ correcto: "Empleado eliminado correctamente" })
+        }else{
+            res.json({ error: "No se ha podido eliminar al empleado" })
+        }
+
+    })
+})
 module.exports = router

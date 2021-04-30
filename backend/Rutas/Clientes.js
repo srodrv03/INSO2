@@ -62,4 +62,23 @@ router.get("/listado", (req,res)=> {
         }
     })
 })
+
+router.post('/delete', (req, res) => {
+    const userData = {
+        email: req.body.email,
+    }
+
+    Cliente().destroy({
+        where: {
+            email: req.body.email
+        }
+    }).then(respuesta => {
+        if(respuesta==1){
+            res.json({ correcto: "Empleado eliminado correctamente" })
+        }else{
+            res.json({ error: "No se ha podido eliminar al empleado" })
+        }
+
+    })
+})
 module.exports = router
