@@ -52,6 +52,14 @@ const routes = [
     meta: {
       hideForAuth: true
     }
+  }
+    ,{
+    path: '/AddEmpleado',
+    name: 'AddEmpleado',
+    component: () => import('../views/AddEmpleado.vue'),
+    meta: {
+      hideForAuth: true
+    }
 
   }
 ] 

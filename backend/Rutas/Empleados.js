@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const cors = require("cors")
+const bcrypt = require("bcrypt")
 const db = require("../database/db")
 const Empleado = require("../Modelos/empleado")
 const Admin = require("../Modelos/admin")
@@ -50,7 +51,9 @@ router.post('/registro', (req, res) => {
         nombre: req.body.nombre,
         apellidos: req.body.apellidos,
         email: req.body.email,
-        password: req.body.pass
+        password: req.body.pass,
+        DNI: req.body.DNI,
+        id: 4
     }
 
     Empleado().findOne({
@@ -61,7 +64,7 @@ router.post('/registro', (req, res) => {
         if (!user) {
             const hash = bcrypt.hashSync(userData.password, 10)
             userData.password = hash
-            User.create(userData).then(user => {
+            Empleado().create(userData).then(user => {
                 res.json({ correcto: "Usuario añadido correctamente" })
             }).catch(err => {
                 res.json({ error: err })
