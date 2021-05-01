@@ -23,9 +23,11 @@
               hide-details
             ></v-text-field>
             <v-spacer></v-spacer>
-            <v-btn color="green" @click="addEmpleado()"
-              >Añadir Empleado</v-btn
-            >
+            <router-link to="/AddEmpleado" tag="button"
+                  ><v-btn color="green" light
+                    >Añadir Empleado</v-btn
+                  ></router-link
+                >
           </v-card-title>
           <v-data-table
             dense
