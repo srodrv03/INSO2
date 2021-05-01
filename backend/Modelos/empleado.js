@@ -11,12 +11,8 @@ module.exports = function(sequelize) {
       type: Sequelize.STRING(20),
       allowNull: true
     },
-    apellido1: {
-      type: Sequelize.STRING(20),
-      allowNull: true
-    },
-    apellido2: {
-      type: Sequelize.STRING(20),
+    apellidos: {
+      type: Sequelize.STRING(60),
       allowNull: true
     },
     DNI: {
