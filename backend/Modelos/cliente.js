@@ -4,7 +4,7 @@ module.exports = function(sequelize) {
   const cliente= db.sequelize.define('cliente', {
     id: {
       type: Sequelize.INTEGER,
-      allowNull: true,
+      autoIncrement: true,
       primaryKey: true
     },
     nombre: {
@@ -74,5 +74,7 @@ module.exports = function(sequelize) {
       },
     ]
   });
+  const vehiculo = require("./vehiculo")
+  cliente.hasMany(vehiculo() ,{foreingKey: "clienteId", onDelete: 'cascade'})
 return cliente
 };

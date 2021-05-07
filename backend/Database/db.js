@@ -3,7 +3,7 @@ const db = {}
 const sequelize = new Sequelize('inso2', 'inso2', 'A12345678.', {
     host: 'localhost',
     dialect: "mysql",
-    logging: false
+    logging: true
   });
 
   db.sequelize = sequelize;

@@ -212,7 +212,7 @@ export default {
       { text: "Modelo", value: "modelo" },
       { text: "Matricula", value: "matricula"},
       { text: "Año de matriculacion", value: "anio" },
-      { text: "Propietario", value: "id_cliente" },
+      { text: "Propietario", value: "clienteId" },
       { text: "", value: "borrarButton" },
     ],
   }),
