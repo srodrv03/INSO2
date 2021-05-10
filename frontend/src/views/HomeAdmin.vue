@@ -107,9 +107,11 @@
               hide-details
             ></v-text-field>
             <v-spacer></v-spacer>
-            <v-btn color="green" @click="addCliente()"
-              >Añadir Vehiculo</v-btn
-            >
+            <router-link to="/AddVehiculo" tag="button"
+                  ><v-btn color="green" light
+                    >Añadir Vehiculo</v-btn
+                  ></router-link
+                >
           </v-card-title>
           <v-data-table
             dense
@@ -212,7 +214,7 @@ export default {
       { text: "Modelo", value: "modelo" },
       { text: "Matricula", value: "matricula"},
       { text: "Año de matriculacion", value: "anio" },
-      { text: "Propietario", value: "id_cliente" },
+      { text: "Propietario", value: "clienteId" },
       { text: "", value: "borrarButton" },
     ],
   }),
