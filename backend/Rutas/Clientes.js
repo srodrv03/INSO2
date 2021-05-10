@@ -8,7 +8,7 @@ router.use(cors())
 
 //loggin
 router.post("/login", (req, res) => {
-    Cliente().findOne({
+    Cliente.findOne({
         where: {
             email: req.body.email
         }
@@ -33,7 +33,7 @@ router.post('/registro', (req,res) => {
         password: req.body.pass
     }
 
-    Cliente().findOne({
+    Cliente.findOne({
         where: {
             email: req.body.email
         }
@@ -41,7 +41,7 @@ router.post('/registro', (req,res) => {
         if(!user) {
             const hash = bcrypt.hashSync(userData.password, 10)
             userData.password = hash
-            Cliente().create(userData).then(user => {
+            Cliente.create(userData).then(user => {
                 res.json({ correcto: "Usuario añadido correctamente"})
             }).catch(err => {
                 res.json( {error:  err})
@@ -52,7 +52,7 @@ router.post('/registro', (req,res) => {
     })
 })
 router.get("/listado", (req,res)=> {
-    Cliente().findAll({
+    Cliente.findAll({
 
     }).then(async (clientes) =>{
         if(clientes){
@@ -68,7 +68,7 @@ router.post('/delete', (req, res) => {
         email: req.body.email,
     }
 
-    Cliente().destroy({
+    Cliente.destroy({
         where: {
             email: req.body.email
         }

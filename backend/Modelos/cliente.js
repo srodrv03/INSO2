@@ -1,7 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require("../database/db")
-module.exports = function(sequelize) {
-  const cliente= db.sequelize.define('cliente', {
+var Cliente = db.sequelize.define('clientes', {
     id: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
@@ -11,16 +10,8 @@ module.exports = function(sequelize) {
       type: Sequelize.STRING(20),
       allowNull: true
     },
-    apellido1: {
-      type: Sequelize.STRING(20),
-      allowNull: true
-    },
-    apellido2: {
-      type: Sequelize.STRING(20),
-      allowNull: true
-    },
-    apodo: {
-      type: Sequelize.STRING(20),
+    apellidos: {
+      type: Sequelize.STRING(60),
       allowNull: true
     },
     DNI: {
@@ -56,25 +47,20 @@ module.exports = function(sequelize) {
       allowNull: true
     },
     password: {
-      type: Sequelize.STRING(50),
+      type: Sequelize.STRING(255),
       allowNull: true
-    }
-  }, {
-    sequelize,
-    tableName: 'cliente',
-    timestamps: false,
-    indexes: [
-      {
-        name: "PRIMARY",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "id" },
-        ]
-      },
-    ]
-  });
-  const vehiculo = require("./vehiculo")
-  cliente.hasMany(vehiculo() ,{foreingKey: "clienteId", onDelete: 'cascade'})
-return cliente
-};
+    },
+    createdAt: {
+      allowNull: true,
+      type: Sequelize.DATE,
+      default: new Date()
+    },
+    updatedAt: {
+      allowNull: true,
+      type: Sequelize.DATE,
+      default: new Date()
+    },
+  },{});
+  const Vehiculo= require("./vehiculo")
+  Cliente.hasMany(Vehiculo,{foreingKey:"clienteId",onDelete: 'cascade'})
+  module.exports=Cliente
