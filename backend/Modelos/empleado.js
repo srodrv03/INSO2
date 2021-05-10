@@ -1,22 +1,18 @@
 const Sequelize = require('sequelize');
 const db = require("../database/db")
-module.exports = function(sequelize) {
-  return db.sequelize.define('empleado', {
+
+  var Empleado= db.sequelize.define('empleados', {
     id: {
       type: Sequelize.INTEGER,
-      allowNull: false,
+      autoIncrement: true,
       primaryKey: true
     },
     nombre: {
       type: Sequelize.STRING(20),
       allowNull: true
     },
-    apellido1: {
-      type: Sequelize.STRING(20),
-      allowNull: true
-    },
-    apellido2: {
-      type: Sequelize.STRING(20),
+    apellidos: {
+      type: Sequelize.STRING(60),
       allowNull: true
     },
     DNI: {
@@ -29,29 +25,13 @@ module.exports = function(sequelize) {
     },
     email: {
       type: Sequelize.STRING(50),
-      allowNull: true
-    },
-    usuario: {
-      type: Sequelize.STRING(20),
-      allowNull: true
+      allowNull: true,
+      primaryKey: true
     },
     password: {
-      type: Sequelize.STRING(20),
+      type: Sequelize.STRING(255),
       allowNull: true
-    }
-  }, {
-    sequelize,
-    tableName: 'empleado',
-    timestamps: false,
-    indexes: [
-      {
-        name: "PRIMARY",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "id" },
-        ]
-      },
-    ]
-  });
-};
+    },
+  },{});
+module.exports=Empleado
+

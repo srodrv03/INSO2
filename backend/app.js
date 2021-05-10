@@ -1,6 +1,7 @@
 var express = require('express');
 const Sequelize = require('sequelize');
 const Cliente = require("./Modelos/cliente")
+const Vehiculo= require("./Modelos/vehiculo")
 var app = express();
 const db = require("./database/db")
 var bodyParser = require('body-parser');
@@ -14,11 +15,11 @@ db.sequelize.authenticate().then(() => {
 }).catch(err => {
   console.error('Unable to connect to the database:', err);
 });
-
-Cliente().sync()
+db.sequelize.sync()
 
 app.use('/clientes', require('./Rutas/Clientes')); 
 app.use('/empleados', require('./Rutas/Empleados')); 
+app.use('/vehiculos', require('./Rutas/Vehiculos')); 
 
 
 app.listen(3000, function () {
