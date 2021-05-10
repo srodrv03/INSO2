@@ -107,9 +107,11 @@
               hide-details
             ></v-text-field>
             <v-spacer></v-spacer>
-            <v-btn color="green" @click="addCliente()"
-              >Añadir Vehiculo</v-btn
-            >
+            <router-link to="/AddVehiculo" tag="button"
+                  ><v-btn color="green" light
+                    >Añadir Vehiculo</v-btn
+                  ></router-link
+                >
           </v-card-title>
           <v-data-table
             dense

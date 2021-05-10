@@ -15,11 +15,7 @@ db.sequelize.authenticate().then(() => {
 }).catch(err => {
   console.error('Unable to connect to the database:', err);
 });
-Vehiculo().sync({force:true}).then(() => {
-  Cliente().sync({force:true})
-})
-
-
+db.sequelize.sync()
 
 app.use('/clientes', require('./Rutas/Clientes')); 
 app.use('/empleados', require('./Rutas/Empleados')); 

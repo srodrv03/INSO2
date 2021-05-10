@@ -8,7 +8,7 @@ const Cliente = require("../Modelos/Cliente")
 router.use(cors())
 
 router.get("/listado", (req,res)=>{
-    Vehiculo().findAll({
+    Vehiculo.findAll({
     }).then((vehiculos) =>{
         if(vehiculos){
             res.json(vehiculos)
@@ -21,7 +21,7 @@ router.get("/listado", (req,res)=>{
 })
 router.post("/delete", (req, res) => {
 
-    Vehiculo().destroy({
+    Vehiculo.destroy({
         where: {
             matricula: req.body.matricula
         }
@@ -36,7 +36,7 @@ router.post("/delete", (req, res) => {
 })
 
 router.post("/add",(req,res) => {
-    Cliente().findOne({
+    Cliente.findOne({
         where: {
             id: req.body.id_cliente
         }
@@ -44,7 +44,7 @@ router.post("/add",(req,res) => {
         if(!user) {
             res.json({ error: "No existe ningun usuario con ese email." })
         }else{
-            Vehiculo().findOne({
+            Vehiculo.findOne({
                 where:{
                     matricula: req.body.matricula
                 }
@@ -55,10 +55,9 @@ router.post("/add",(req,res) => {
                         modelo: req.body.modelo,
                         anio: req.body.anio,
                         matricula: req.body.matricula,
-                        clienteId: req.body.propietario,
-                        id:6
+                        clienteId: req.body.id_cliente,
                       };
-                    Vehiculo().create(userData)
+                    Vehiculo.create(userData)
                     .then(vehiculo => {
                         res.json({ correcto: "Vehiculo añadido correctamente."})
                     }).catch(err => {

@@ -1,9 +1,10 @@
 const Sequelize = require('sequelize');
 const db = require("../database/db")
-module.exports = function(sequelize) {
-  vehiculo= db.sequelize.define('vehiculo', {
+var Vehiculo = db.sequelize.define('vehiculos', {
     id: {
       type: Sequelize.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
       allowNull: true
     },
     marca: {
@@ -17,7 +18,7 @@ module.exports = function(sequelize) {
     matricula: {
       type: Sequelize.STRING(45),
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
     },
     anio: {
       type: Sequelize.INTEGER,
@@ -35,25 +36,6 @@ module.exports = function(sequelize) {
       type: Sequelize.STRING(20),
       allowNull: true
     },
-  }, 
-  
-  {
-    sequelize,
-    tableName: 'vehiculo',
-    timestamps: false,
-    indexes: [
-      {
-        name: "PRIMARY",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "id" },
-        ]
-      },
-    ]
-  });
-  const cliente = require("./cliente")
-  vehiculo.belongsTo(cliente(),{foreingKey: "clienteId",onDelete: 'cascade'})
-  cliente().hasMany(vehiculo,{foreingKey: "clienteId", onDelete: 'cascade'})
-  return vehiculo
-};
+  },{});
+
+  module.exports=Vehiculo
