@@ -88,9 +88,7 @@ router.post("/add", (req, res) => {
                     res.json({ error: "Ya existe un vehiculo con esa matricula." })
                 }
             })
-
         }
-
     })
 })
 module.exports = router
