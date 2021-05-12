@@ -74,7 +74,7 @@ const routes = [
     name: 'HomeAdministrador',
     component: () => import('../views/Vehiculos.vue'),
     meta: {
-      hideForAuth: true
+      hideForAuth: false
     }
   }
   ,{
@@ -82,7 +82,7 @@ const routes = [
     name: 'HomeAdministrador',
     component: () => import('../views/Reparaciones.vue'),
     meta: {
-      hideForAuth: true
+      hideForAuth: false
     }
   }
   ,{
@@ -90,7 +90,7 @@ const routes = [
     name: 'HomeAdministrador',
     component: () => import('../views/Cuenta.vue'),
     meta: {
-      hideForAuth: true
+      hideForAuth: false
     }
   }
 ] 
