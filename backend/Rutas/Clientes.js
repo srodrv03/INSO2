@@ -87,4 +87,42 @@ router.post('/informacion', (req,res) => {
         res.json(respuesta)
     })
 })
+
+router.post('/edita', (req,res) => {
+    const userData = {
+        nombre : req.body.nombre,
+        apellidos: req.body.apellidos,
+        telefono:req.body.telefono,
+        IBAN:req.body.IBAN,
+        direccion:req.body.direccion,
+        localidad:req.body.localidad,
+        cp:req.body.CP,
+        pais:req.body.pais
+    }
+
+    Cliente.findOne({
+        where: {
+            email: req.body.email
+        }
+    }).then(user => {
+        if(!user) {
+            res.json({ error: "error al modificar la informacion"})
+        }else{
+            user.update({
+                nombre : req.body.nombre,
+                apellidos: req.body.apellidos,
+                telefono:req.body.telefono,
+                IBAN:req.body.IBAN,
+                direccion:req.body.direccion,
+                localidad:req.body.localidad,
+                cp:req.body.CP,
+                pais:req.body.pais
+            }).then(user => {
+                res.json({resp:"correcto"})
+            })
+           
+        }
+    })
+})
+
 module.exports = router
