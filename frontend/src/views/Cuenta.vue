@@ -119,10 +119,26 @@
         </v-card-text>
 
         <v-card-actions class="justify-center">
-          <v-btn outlined text class="success" height="50" width="170" elevation="10" @click="confirmaCambios()">
+          <v-btn
+            outlined
+            text
+            class="success"
+            height="50"
+            width="170"
+            elevation="10"
+            @click="confirmaCambios()"
+          >
             Aceptar
           </v-btn>
-          <v-btn outlined text class="red ml-15" height="50" width="170" elevation="10" @click="obtieneInformacion()">
+          <v-btn
+            outlined
+            text
+            class="red ml-15"
+            height="50"
+            width="170"
+            elevation="10"
+            @click="obtieneInformacion()"
+          >
             Cancelar
           </v-btn>
         </v-card-actions>
@@ -150,7 +166,7 @@ export default {
     localidad: "",
     CP: "",
     pais: "",
-    visible:false,
+    visible: false,
   }),
   mounted: function () {
     this.obtieneInformacion();
@@ -197,9 +213,8 @@ export default {
           if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
             console.log(response.data);
           } else {
-            this.visible=true
+            this.visible = true;
             this.obtieneInformacion();
-            
           }
         });
     },
