@@ -30,6 +30,7 @@ router.post('/registro', (req,res) => {
         nombre : req.body.nombre,
         apellidos: req.body.apellidos,
         email: req.body.email,
+        DNI: req.body.DNI,
         password: req.body.pass
     }
 
@@ -64,10 +65,6 @@ router.get("/listado", (req,res)=> {
 })
 
 router.post('/delete', (req, res) => {
-    const userData = {
-        email: req.body.email,
-    }
-
     Cliente.destroy({
         where: {
             email: req.body.email
@@ -78,7 +75,54 @@ router.post('/delete', (req, res) => {
         }else{
             res.json({ error: "No se ha podido eliminar al empleado" })
         }
-
     })
 })
+router.post('/informacion', (req,res) => {
+    
+    Cliente.findOne({
+        where:{
+            email:req.body.email
+        }
+    }).then(respuesta => {
+        res.json(respuesta)
+    })
+})
+
+router.post('/edita', (req,res) => {
+    const userData = {
+        nombre : req.body.nombre,
+        apellidos: req.body.apellidos,
+        telefono:req.body.telefono,
+        IBAN:req.body.IBAN,
+        direccion:req.body.direccion,
+        localidad:req.body.localidad,
+        cp:req.body.CP,
+        pais:req.body.pais
+    }
+
+    Cliente.findOne({
+        where: {
+            email: req.body.email
+        }
+    }).then(user => {
+        if(!user) {
+            res.json({ error: "error al modificar la informacion"})
+        }else{
+            user.update({
+                nombre : req.body.nombre,
+                apellidos: req.body.apellidos,
+                telefono:req.body.telefono,
+                IBAN:req.body.IBAN,
+                direccion:req.body.direccion,
+                localidad:req.body.localidad,
+                cp:req.body.CP,
+                pais:req.body.pais
+            }).then(user => {
+                res.json({resp:"correcto"})
+            })
+           
+        }
+    })
+})
+
 module.exports = router

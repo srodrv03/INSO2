@@ -1,4 +1,9 @@
 <template>
+<v-row class="mt-5">
+  <v-col cols="1">
+  <Menu/>
+  </v-col>
+  <v-col cols="10" >
   <v-data-table
     :headers="headers"
     :items="desserts"
@@ -98,10 +103,16 @@
       <v-btn color="primary" @click="initialize"> Reset </v-btn>
     </template>
   </v-data-table>
+  </v-col>
+</v-row>
 </template>
 
 <script>
+import Menu from "@/components/Menu.vue";
 export default {
+  components:{
+    Menu
+  },
   data: () => ({
     dialog: false,
     dialogDelete: false,
