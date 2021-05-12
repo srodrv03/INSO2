@@ -1,67 +1,69 @@
 <template>
-  <v-card class="mr-5 ml-5 mt-5" max-width="max" outlined>
-    <v-card-title>
-      <span class="headline">Editar cuenta</span>
-    </v-card-title>
-    <v-card-text>
-      <v-container>
-        <v-col>
-          <v-container>
-  <v-row>
-            <v-col cols="3" sm="3" md="3">
-              <v-text-field label="Nombre"></v-text-field>
-            </v-col>
-            <v-col cols="3" sm="3" md="3" lg="3">
-              <v-text-field label="Apellidos"></v-text-field>
-            </v-col>
-            <v-col cols="3" sm="3" md="3"> </v-col>
-          </v-row>
+  <v-row class="mt-5">
+    <v-col cols="1">
+      <Menu />
+    </v-col>
+    <v-col cols="10">
+      <v-card
+        class="mr-5 ml-5 mt-5"
+        color="white"
+        max-width="max"
+        outlined
+        elevation="24"
+      >
+        <v-card-title class="justify-center">
+          <span class="headline font-weight-black" >EDITAR CUENTA</span>
+        </v-card-title>
+        <v-card-text class="justify-center mt-5">
           <v-row>
-            <v-col cols="3" sm="3" md="3">
-              <v-text-field label="Email"></v-text-field>
+            <v-col cols="4" >
+              <v-text-field class="font-weight-black" outlined color="black" label="Nombre"></v-text-field>
+            </v-col>
+            <v-col cols="6" >
+              <v-text-field class="font-weight-black" outlined color="black" label="Apellidos"></v-text-field>
+            </v-col>
+            <v-col cols="2" >
+              <v-text-field class="font-weight-black" outlined color="black" label="DNI"></v-text-field>
+            </v-col>
+            <v-col cols="3" >
+              <v-text-field class="font-weight-black" outlined color="black" label="Email"></v-text-field>
+            </v-col>
+            <v-col cols="3" >
+              <v-text-field  class="font-weight-black" outlined color="black" label="Telefono"></v-text-field>
+            </v-col>
+            <v-col cols="6" >
+              <v-text-field class="font-weight-black" outlined color="black" label="IBAN"></v-text-field>
+            </v-col>
+            <v-col cols="7" >
+              <v-text-field class="font-weight-black" outlined color="black" label="Dirección"></v-text-field>
+            </v-col>
+            <v-col cols="5" >
+              <v-text-field class="font-weight-black" outlined color="black" label="Localidad"></v-text-field>
             </v-col>
             <v-col cols="3" sm="3" md="3" lg="3">
-              <v-text-field label="Compañia"></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="3" sm="3" md="3">
-              <v-text-field label="Ciudad"></v-text-field>
+              <v-text-field class="font-weight-black" outlined color="black" label="Código postal"></v-text-field>
             </v-col>
             <v-col cols="3" sm="3" md="3" lg="3">
-              <v-text-field label="País"></v-text-field>
+              <v-text-field class="font-weight-black" outlined color="black" label="País"></v-text-field>
             </v-col>
           </v-row>
-          <v-row>
-            <v-col cols="3" sm="3" md="3">
-              <v-text-field label="Dirección"></v-text-field>
-            </v-col>
-            <v-col cols="3" sm="3" md="3" lg="3">
-              <v-text-field label="Código postal"></v-text-field>
-            </v-col>
-          </v-row>
-          </v-container>
-        </v-col>
-        <v-col>
-          <v-img
-            lazy-src="https://picsum.photos/id/11/10/6"
-            max-height="150"
-            max-width="250"
-            src="https://picsum.photos/id/11/500/300"
-          ></v-img>
-        </v-col>
-      </v-container>
-    </v-card-text>
+        </v-card-text>
 
-    <v-card-actions>
-      <v-btn outlined text> Aceptar </v-btn>
-      <v-btn outlined text> Cancelar </v-btn>
-    </v-card-actions>
-  </v-card>
+        <v-card-actions class="justify-center">
+          <v-btn outlined text class="success"> Aceptar </v-btn>
+          <v-btn outlined text class="red"> Cancelar </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
+import Menu from "@/components/Menu.vue";
 export default {
+  components: {
+    Menu,
+  },
   data: () => ({
     dialog: false,
     dialogDelete: false,
