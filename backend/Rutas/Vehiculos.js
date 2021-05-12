@@ -25,19 +25,25 @@ router.post("/listadoUsuario", (req, res) => {
             email: req.body.email
         }
     }).then(user => {
-        Vehiculo.findAll({
-            where:{
-                clienteId:user.id
-            }
-        }).then((vehiculos) => {
-            if (vehiculos) {
-                res.json(vehiculos)
-            } else {
-                console.log("Error al consultar el listado de los vehiculos")
-            }
-        }).catch(err => {
-            console.log(err)
-        })
+        if(!user){
+            console.log("errrrrror")
+        }else{
+            Vehiculo.findAll({
+                where:{
+                    clienteId:user.id
+                }
+            }).then((vehiculos) => {
+                if (vehiculos) {
+                    res.json(vehiculos)
+                } else {
+                    console.log("Error al consultar el listado de los vehiculos")
+                }
+            }).catch(err => {
+                console.log(err)
+            })
+        }
+    }).catch(err => {
+        console.log(err)
     })
 })
 router.post("/delete", (req, res) => {
@@ -48,9 +54,9 @@ router.post("/delete", (req, res) => {
         }
     }).then(respuesta => {
         if (respuesta == 1) {
-            res.json({ correcto: "Empleado eliminado correctamente" })
+            res.json({ correcto: "Vehiculo eliminado correctamente" })
         } else {
-            res.json({ error: "No se ha podido eliminar al empleado" })
+            res.json({ error: "No se ha podido eliminar el vehiculo" })
         }
 
     })
@@ -59,7 +65,7 @@ router.post("/delete", (req, res) => {
 router.post("/add", (req, res) => {
     Cliente.findOne({
         where: {
-            id: req.body.id_cliente
+            email: req.body.email
         }
     }).then(user => {
         if (!user) {
@@ -76,7 +82,7 @@ router.post("/add", (req, res) => {
                         modelo: req.body.modelo,
                         anio: req.body.anio,
                         matricula: req.body.matricula,
-                        clienteId: req.body.id_cliente,
+                        clienteId: user.id,
                     };
                     Vehiculo.create(userData)
                         .then(vehiculo => {

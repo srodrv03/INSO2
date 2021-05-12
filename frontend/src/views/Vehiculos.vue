@@ -96,14 +96,21 @@
           class="elevation-1"
         >
           <template v-slot:item.borrarButton="{ item }">
-            <v-btn
+            <v-icon
               @click="creaDialogDelete(item)"
-              color="red"
-              small
-              style="width: 80px; height: 22px"
+              
+              style="width: 10px; height: 40px"
               v-model="item.borrarButton"
-              >Eliminar</v-btn
-            >
+              >mdi-delete </v-icon>
+            
+          </template>
+          <template v-slot:item.editarButton="{ item }">
+            <v-icon
+              @click="creaEditar(item)"
+              style="width: 30px; height: 40px"
+              v-model="item.editarButton"
+              >mdi-pencil </v-icon>
+            
           </template>
         </v-data-table>
       </v-card>
@@ -114,8 +121,7 @@
           <v-row>
             <v-col cols="12">
               <v-card-text class="title"
-                >"Esta seguro que desea eleminar el vehiculo con
-                matricula"</v-card-text
+                >{{textoDialog}}</v-card-text
               >
             </v-col>
           </v-row>
@@ -147,6 +153,7 @@ export default {
     dialogAdd: false,
     visibleAlerta: false,
     msgAlerta:"",
+    textoDialog:"",
     tipo_alerta:"",
     marca: "",
     modelo: "",
@@ -166,6 +173,7 @@ export default {
       { text: "Matricula", value: "matricula" },
       { text: "Año de matriculacion", value: "anio" },
       { text: "", value: "borrarButton" },
+      { text: "", value: "editarButton" },
     ],
     listaVehiculos: [],
   }),
@@ -200,13 +208,13 @@ export default {
         .post("http://localhost:3000/vehiculos/delete", vehiculoData)
         .then((response) => {
           if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
-            this.alerta_msg = response.data.error;
+            this.msgAlerta = response.data.error;
             this.tipo_alerta = "error";
-            this.alerta = true;
+            this.visibleAlerta = true;
           } else {
-            this.alerta_msg = response.data.correcto;
+            this.msgAlerta = response.data.correcto;
             this.tipo_alerta = "success";
-            this.alerta = true;
+            this.visibleAlerta = true;
           }
           this.listaVehiculos = [];
           this.obtenerVehiculos();
@@ -214,13 +222,9 @@ export default {
     },
     creaDialogDelete(item) {
       this.textoDialog =
-        "¿Esta seguro que desea eliminar al El vehiculo " +
-        item.marca +
-        " " +
-        item.modelo +
-        " " +
+        "¿Esta seguro que desea eliminar al el vehiculo con matricula: " +
         item.matricula +
-        "? \n Esto eliminara tambien todas sus reparaciones";
+        " ? \n Esto eliminara tambien todas sus reparaciones";
       this.elemento = item;
       this.dialog = true;
     },
@@ -231,7 +235,7 @@ export default {
           modelo: this.modelo,
           anio: this.anio,
           matricula: this.matricula,
-          id_cliente: this.listaVehiculos[0].clienteId,
+          email:this.emailUsuario
         };
         axios.post("http://localhost:3000/vehiculos/add", userData).then(
           (response) => {
