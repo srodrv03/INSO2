@@ -109,7 +109,7 @@ export default {
                 this.logearse();
                 this.setEmail(this.email);
                 this.setTipo(this.tipo_user);
-                this.$router.push("/home");
+                this.$router.push("/HomeCliente/Vehiculos");
               }
             },
             (error) => {

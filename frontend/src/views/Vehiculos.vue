@@ -273,10 +273,13 @@ export default {
             this.msgAlerta = response.data.error;
             this.tipo_alerta = "error";
             this.visibleAlerta = true;
+            this.dialog=false
+
           } else {
             this.msgAlerta = response.data.correcto;
             this.tipo_alerta = "success";
             this.visibleAlerta = true;
+            this.dialog=false
           }
           this.listaVehiculos = [];
           this.obtenerVehiculos();
@@ -342,12 +345,14 @@ export default {
               this.msgAlerta = "No se ha podido solicitar la reparacion. Inténtelo de nuevo mas tarde.";
               this.visibleAlerta = true;
               this.dialogRep = false;
+              this.texto=""
               
             } else {
               this.tipo_alerta = "success";
               this.msgAlerta = "Reparacion solicitada correctamente.";
               this.visibleAlerta = true;
               this.dialogRep = false;
+              this.texto=""
             }
           },
           (error) => {

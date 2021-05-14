@@ -24,13 +24,6 @@ const routes = [
     }
 
   },{
-    path: '/HomeCliente',
-    name: 'HomeCliente',
-    component: () => import('../views/HomeCliente.vue'),
-    meta: {
-      hideForAuth: false
-    }
-  },{
     path: '/HomeEmpleado',
     name: 'HomeEmpleado',
     component: () => import('../views/HomeEmpleado.vue'),
@@ -71,7 +64,7 @@ const routes = [
   }
   ,{
     path: '/HomeCliente/Vehiculos',
-    name: 'HomeAdministrador',
+    name: '/HomeCliente/Vehiculos',
     component: () => import('../views/Vehiculos.vue'),
     meta: {
       hideForAuth: false
@@ -79,7 +72,7 @@ const routes = [
   }
   ,{
     path: '/HomeCliente/Reparaciones',
-    name: 'HomeAdministrador',
+    name: '/HomeCliente/Reparaciones',
     component: () => import('../views/Reparaciones.vue'),
     meta: {
       hideForAuth: false
@@ -87,7 +80,7 @@ const routes = [
   }
   ,{
     path: '/HomeCliente/cuenta',
-    name: 'HomeAdministrador',
+    name: '/HomeCliente/cuenta',
     component: () => import('../views/Cuenta.vue'),
     meta: {
       hideForAuth: false

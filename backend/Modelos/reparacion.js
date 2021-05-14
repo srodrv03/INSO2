@@ -19,6 +19,10 @@ var Reparacion = db.sequelize.define('reparaciones', {
       type: Sequelize.DATEONLY,
       allowNull: true
     },
+    estado:{
+      type: Sequelize.STRING(45),
+      allowNull:true
+    },
     idVehiculo:{
       type : Sequelize.INTEGER,
       reference: "vehiculos",
