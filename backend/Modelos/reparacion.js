@@ -1,14 +1,14 @@
 const Sequelize = require('sequelize');
 const db = require("../database/db")
-module.exports = function(sequelize) {
-  return db.sequelize.define('reparacion', {
+var Reparacion = db.sequelize.define('reparaciones', {
     id: {
       type: Sequelize.INTEGER,
       allowNull: false,
-      primaryKey: true
+      autoIncrement: true,
+      primaryKey: true,
     },
     descripcion: {
-      type: Sequelize.STRING(100),
+      type: Sequelize.STRING(255),
       allowNull: true
     },
     fecha_inicio: {
@@ -19,94 +19,22 @@ module.exports = function(sequelize) {
       type: Sequelize.DATEONLY,
       allowNull: true
     },
-    id_vehiculo: {
-      type: Sequelize.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'vehiculo',
-        key: 'id'
-      }
-    },
-    id_empleado: {
-      type: Sequelize.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'empleado',
-        key: 'id'
-      }
-    },
-    id_estado: {
-      type: Sequelize.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'estado',
-        key: 'id'
-      }
-    },
-    id_reparacion: {
-      type: Sequelize.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'categoria_reparacion',
-        key: 'id'
-      }
-    },
-    id_factura: {
-      type: Sequelize.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'factura',
-        key: 'id'
-      }
+    idVehiculo:{
+      type : Sequelize.INTEGER,
+      reference: "vehiculos",
+      referencesKey: "id"
     }
-  }, {
-    sequelize,
-    tableName: 'reparacion',
-    timestamps: false,
-    indexes: [
-      {
-        name: "PRIMARY",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "id" },
-        ]
-      },
-      {
-        name: "reparacion_vehiculos_id_fk",
-        using: "BTREE",
-        fields: [
-          { name: "id_vehiculo" },
-        ]
-      },
-      {
-        name: "reparacion_empleado_id_fk",
-        using: "BTREE",
-        fields: [
-          { name: "id_empleado" },
-        ]
-      },
-      {
-        name: "reparacion_estado_id_fk",
-        using: "BTREE",
-        fields: [
-          { name: "id_estado" },
-        ]
-      },
-      {
-        name: "reparacion_categoria_reparacion_id_fk",
-        using: "BTREE",
-        fields: [
-          { name: "id_reparacion" },
-        ]
-      },
-      {
-        name: "reparacion_factura_id_fk",
-        using: "BTREE",
-        fields: [
-          { name: "id_factura" },
-        ]
-      },
-    ]
-  });
+    
+  },{});
+  Reparacion.associate = modelos => {
+    Reparacion.belongsTo(modelos.Vehiculo, {
+        foreignKey: {
+            name: "idVehiculo",
+            allowNull: false,
+            onDelete: 'cascade',
+            onUpdate: 'cascade'
+        }
+    });
 };
+module.exports=Reparacion
+

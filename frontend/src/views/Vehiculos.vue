@@ -71,6 +71,51 @@
           </v-form>
         </v-card-text>
       </v-card>
+      <v-card class="mb-10" v-if="dialogRep">
+        <v-card-title class="text-h3 justify-center">
+          Solicitar Reparacion
+        </v-card-title>
+        
+        <v-card-text>
+          <v-form ref="registerForm" v-model="valid" lazy-validation>
+            <v-row>
+              <v-col cols="12" sm="6" md="6">
+                <v-text-field
+                  v-model="datosvehiculo.matricula"
+                  label="Matricula del Vehiculo"
+                  maxlength="20"
+                  disabled
+                >{{datosvehiculo.matricula}}</v-text-field>
+              </v-col>
+              <v-col cols="12" sm="12" md="12">
+                <v-textarea
+                  v-model="texto"
+                  counter
+                  requiered
+                  label="Descripción del problema"
+                  :rules="rules"
+                ></v-textarea>
+              </v-col>
+              <v-spacer></v-spacer>
+              <v-col cols="6" sm="6" xsm="6">
+                <v-btn
+                  x-large
+                  block
+                  :disabled="!valid"
+                  color="success"
+                  @click="confirmaReparacion(datosvehiculo)"
+                  >Confirmar Reparacion</v-btn
+                >
+              </v-col>
+              <v-col cols="6" sm="6" xsm="6">
+                <v-btn x-large outlined color="red" @click="dialogRep = false"
+                  >Cancelar</v-btn
+                >
+              </v-col>
+            </v-row>
+          </v-form>
+        </v-card-text>
+      </v-card>
       <v-card>
         <v-card-title>
           Vehiculos
@@ -112,6 +157,17 @@
               >mdi-pencil </v-icon>
             
           </template>
+          <template v-slot:item.reparacionButton="{ item }">
+              <v-btn
+                @click="solicitaReparacion(item)"
+                color="teal"
+                style="width:165px; height:30px"
+                small
+                outlined
+                v-model="item.reparacionButton"
+                >Solicitar Reparacion</v-btn
+              >
+            </template>
         </v-data-table>
       </v-card>
     </v-col>
@@ -148,19 +204,24 @@ export default {
     Menu,
   },
   data: () => ({
-    valid:false,
+    v:"",
+    texto:"",
+    rules: [(v) => v.length <= 255 || "Maximo 255 carcateres"],
+    valid: false,
     dialog: false,
     dialogAdd: false,
     visibleAlerta: false,
-    msgAlerta:"",
-    textoDialog:"",
-    tipo_alerta:"",
+    dialogRep: false,
+    msgAlerta: "",
+    textoDialog: "",
+    tipo_alerta: "",
     marca: "",
     modelo: "",
     anio: "",
     matricula: "",
     searchVehiculo: "",
     elemento: "",
+    datosvehiculo: {},
     cabeceraVehiculos: [
       {
         text: "ID",
@@ -172,6 +233,7 @@ export default {
       { text: "Modelo", value: "modelo" },
       { text: "Matricula", value: "matricula" },
       { text: "Año de matriculacion", value: "anio" },
+      { text: "", value: "reparacionButton" },
       { text: "", value: "borrarButton" },
       { text: "", value: "editarButton" },
     ],
@@ -228,29 +290,29 @@ export default {
       this.elemento = item;
       this.dialog = true;
     },
-  confirmar() { 
-    if (this.$refs.registerForm.validate()) {
+    confirmar() {
+      if (this.$refs.registerForm.validate()) {
         const userData = {
           marca: this.marca,
           modelo: this.modelo,
           anio: this.anio,
           matricula: this.matricula,
-          email:this.emailUsuario
+          email: this.emailUsuario,
         };
         axios.post("http://localhost:3000/vehiculos/add", userData).then(
           (response) => {
             if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
-              this.msgAlerta=response.data.error;
-              this.tipo_alerta="error"
+              this.msgAlerta = response.data.error;
+              this.tipo_alerta = "error";
               this.visibleAlerta = true;
             } else {
               ///modificar el push al home
               this.tipo_alerta = "success";
-              this.msgAlerta="Vehiculo añadido correctamente."
-              this.visibleAlerta=true
-              this.listaVehiculos=[]
-              this.obtenerVehiculos()
-              this.dialogAdd=false
+              this.msgAlerta = "Vehiculo añadido correctamente.";
+              this.visibleAlerta = true;
+              this.listaVehiculos = [];
+              this.obtenerVehiculos();
+              this.dialogAdd = false;
             }
           },
           (error) => {
@@ -259,6 +321,45 @@ export default {
         );
       }
     },
-  }
+
+    solicitaReparacion(item) {
+      this.datosvehiculo = {
+        matricula:item.matricula,
+        id:item.id
+      }
+      this.dialogRep = true;
+    },
+    confirmaReparacion(datos){
+      const vehiculodata={
+        matricula:datos.matricula,
+        id:datos.id,
+        descripcion:this.texto,
+      }
+      axios.post("http://localhost:3000/reparaciones/crea", vehiculodata).then(
+          (response) => {
+            if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
+              this.tipo_alerta = "error";
+              this.msgAlerta = "No se ha podido solicitar la reparacion. Inténtelo de nuevo mas tarde.";
+              this.visibleAlerta = true;
+              this.dialogRep = false;
+              
+            } else {
+              this.tipo_alerta = "success";
+              this.msgAlerta = "Reparacion solicitada correctamente.";
+              this.visibleAlerta = true;
+              this.dialogRep = false;
+            }
+          },
+          (error) => {
+            console.log(error);
+            this.tipo_alerta = "error";
+            this.msgAlerta = "No se ha podido solicitar la reparacion. Inténtelo de nuevo mas tarde.";
+            this.visibleAlerta = true;
+            this.dialogRep = false;
+          }
+        );
+
+    }
+  },
 };
 </script>

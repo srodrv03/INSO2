@@ -17,7 +17,8 @@ const db = require("../database/db")
     },
     DNI: {
       type: Sequelize.STRING(10),
-      allowNull: true
+      allowNull: false,
+      unique: true
     },
     telefono: {
       type: Sequelize.INTEGER,
@@ -25,8 +26,8 @@ const db = require("../database/db")
     },
     email: {
       type: Sequelize.STRING(50),
-      allowNull: true,
-      primaryKey: true
+      allowNull: false,
+      unique: true
     },
     password: {
       type: Sequelize.STRING(255),
