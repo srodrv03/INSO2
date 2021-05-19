@@ -19,6 +19,7 @@ app.use('/clientes', require('./Rutas/Clientes'));
 app.use('/empleados', require('./Rutas/Empleados')); 
 app.use('/vehiculos', require('./Rutas/Vehiculos')); 
 app.use('/reparaciones', require('./Rutas/Reparaciones')); 
+app.use('/proveedores', require('./Rutas/Proveedores')); 
 
 
 app.listen(3000, function () {

@@ -123,11 +123,8 @@ export default {
 
   methods: {
     obtenerReparaciones() {
-      const userdata = {
-        email: this.emailUsuario,
-      };
-      axios
-        .post("http://localhost:3000/reparaciones/listadototal", userdata)
+      
+      axios.get("http://localhost:3000/reparaciones/listadototal")
         .then((response) => {
           if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
             console.log(response.data);

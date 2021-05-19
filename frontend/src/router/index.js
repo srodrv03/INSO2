@@ -30,6 +30,14 @@ const routes = [
     meta: {
       requiresAuth: true
     }
+  },
+  {
+    path: '/HomeEmpleado/ReparacionesActivas',
+    name: 'HomeEmpleado',
+    component: () => import('../views/ReparacionActiva.vue'),
+    meta: {
+      requiresAuth: true
+    }
   },{
     path: '/HomeAdministrador',
     name: 'HomeAdministrador',

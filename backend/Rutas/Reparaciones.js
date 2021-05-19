@@ -64,7 +64,7 @@ router.post("/listado", (req,res) =>{
     })
 })
 
-router.post("/listadototal", (req,res) =>{
+router.get("/listadototal", (req,res) =>{
     Reparacion.findAll({
     
     }).then((reparaciones) =>{

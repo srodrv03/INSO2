@@ -57,7 +57,7 @@ export default {
         },
         {
           icon: "mdi-tools",
-          title: "Mis reparaciones",
+          title: "Mis Reparaciones Activas",
         },
         { icon: "mdi-account", title: "Cuenta" },
       ],
@@ -70,8 +70,8 @@ export default {
     acciones(item) {
       if (item.title == "Listado de Reparaciones") {
         this.$router.push("/HomeEmpleado/Listado");
-      } else if (item.title == "Reparaciones") {
-        this.$router.push("/HomeCliente/Reparaciones");
+      } else if (item.title == "Mis Reparaciones Activas") {
+        this.$router.push("/HomeEmpleado/ReparacionesActivas");
       } else if (item.title == "Cuenta") {
         this.$router.push("/HomeCliente/cuenta");
       }
