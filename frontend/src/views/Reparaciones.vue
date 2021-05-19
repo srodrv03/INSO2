@@ -9,7 +9,7 @@
           Reparaciones
           <v-spacer></v-spacer>
           <v-text-field
-            v-model="searchVehiculo"
+            v-model="searchReparacion"
             append-icon="mdi-magnify"
             label="Introduce el modelo del Vehiculo..."
             single-line
@@ -21,7 +21,7 @@
           dense
           :headers="cabeceraReparacion"
           :items="listaReparacion"
-          :search="searchVehiculo"
+          :search="searchReparacion"
           item-key="name"
           class="elevation-1"
         >
@@ -35,6 +35,7 @@
 <script>
 const axios= require("axios");
 import { mapState } from "vuex";
+import dayjs from 'dayjs';
 import Menu from "@/components/Menu.vue";
 export default {
   components: {
@@ -43,10 +44,11 @@ export default {
   data: () => ({
     dialog: false,
     dialogDelete: false,
+    searchReparacion:"",
     cabeceraReparacion: [
       { text: "Identificador Reparacion", value: "id" },
       { text: "Identificador Vehiculo", value: "idVehiculo" },
-      { text: "Fecha incicio", value: "fechaInicio" },
+      { text: "Fecha incicio", value: "createdAt" },
       { text: "Fecha fin", value: "fechaFin" },
       { text: "Descripción", value: "descripcion" },
       { text: "Estado", value: "estado" },
@@ -73,9 +75,10 @@ const userdata = {
           } else {
             
             for (var i of Object.keys(response.data)) {
+           
+              response.data[i].createdAt=dayjs(response.data[i].createdAt).format('D MMMM, YYYY')
               this.listaReparacion.push(response.data[i]);
             }
-            console.log("Hola")
           }
         });
     },
