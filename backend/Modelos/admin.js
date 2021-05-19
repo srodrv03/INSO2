@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const db = require("../database/db")
 module.exports = function(sequelize) {
   const admin= db.sequelize.define('admin', {
-    idAdmin: {
+    id: {
       type: Sequelize.INTEGER,
       allowNull: false,
       primaryKey: true

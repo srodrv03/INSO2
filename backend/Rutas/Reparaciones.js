@@ -64,4 +64,32 @@ router.post("/listado", (req,res) =>{
     })
 })
 
+router.post("/listadototal", (req,res) =>{
+    Reparacion.findAll({
+    
+    }).then((reparaciones) =>{
+        res.json(reparaciones)
+    }).catch(err => {
+        console.log(err)
+    })
+})
+router.post("/iniciareparacion", (req,res) =>{
+
+    Reparacion.findOne({
+        where:{
+            id:req.body.idReparacion
+        }
+    })
+    .then(reparacion => {
+        reparacion.update({
+            idEmpleado:req.body.idEmpleado,
+            estado:"REPARANDO"
+        }).then(user => {
+            res.json({resp:"correcto"})
+        })
+    }).catch(err => {
+        res.json({ error: "No se ha podido modificar correctamente el estado" })
+    })
+})
+
 module.exports = router

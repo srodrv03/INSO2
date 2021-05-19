@@ -24,18 +24,18 @@ const routes = [
     }
 
   },{
-    path: '/HomeEmpleado',
+    path: '/HomeEmpleado/Listado',
     name: 'HomeEmpleado',
-    component: () => import('../views/HomeEmpleado.vue'),
+    component: () => import('../views/EmpleadoReparaciones.vue'),
     meta: {
-      hideForAuth: true
+      requiresAuth: true
     }
   },{
     path: '/HomeAdministrador',
     name: 'HomeAdministrador',
     component: () => import('../views/HomeAdmin.vue'),
     meta: {
-      hideForAuth: true
+      requiresAuth: true
     }
 
   },{
@@ -43,7 +43,7 @@ const routes = [
     name: 'AddCliente',
     component: () => import('../views/AddCliente.vue'),
     meta: {
-      hideForAuth: true
+      requiresAuth: true
     }
   }
     ,{
@@ -51,7 +51,7 @@ const routes = [
     name: 'AddEmpleado',
     component: () => import('../views/AddEmpleado.vue'),
     meta: {
-      hideForAuth: true
+      requiresAuth: true
     }
   }
   ,{
@@ -59,7 +59,7 @@ const routes = [
     name: 'AddVehiculo',
     component: () => import('../views/AddVehiculo.vue'),
     meta: {
-      hideForAuth: true
+      requiresAuth: true
     }
   }
   ,{
@@ -67,7 +67,7 @@ const routes = [
     name: '/HomeCliente/Vehiculos',
     component: () => import('../views/Vehiculos.vue'),
     meta: {
-      hideForAuth: false
+      requiresAuth: true
     }
   }
   ,{
@@ -75,7 +75,7 @@ const routes = [
     name: '/HomeCliente/Reparaciones',
     component: () => import('../views/Reparaciones.vue'),
     meta: {
-      hideForAuth: false
+      requiresAuth: true
     }
   }
   ,{
@@ -83,7 +83,7 @@ const routes = [
     name: '/HomeCliente/cuenta',
     component: () => import('../views/Cuenta.vue'),
     meta: {
-      hideForAuth: false
+      requiresAuth: true
     }
   }
 ] 
@@ -107,7 +107,9 @@ router.beforeEach((to, from, next) => {
 
   if (to.matched.some(record => record.meta.hideForAuth)) {
     if (store.state.logged) {
-        next({ path: '/home' });
+    
+      next({ path: '/HomeAdministrador' });
+
     } else {
         next();
     }

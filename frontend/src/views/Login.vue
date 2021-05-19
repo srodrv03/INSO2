@@ -85,7 +85,7 @@ export default {
     alerta: false,
   }),
   computed: {
-    ...mapState(["logged", "emailUsuario", "tipoUsuario"]),
+    ...mapState(["logged", "emailUsuario", "tipoUsuario","id"]),
   },
   methods: {
     iniciar() {
@@ -129,8 +129,10 @@ export default {
               } else {
                 this.logearse();
                 this.setEmail(this.email);
+
+                this.setId(response.data.id)
                 this.setTipo(this.tipo_user);
-                this.$router.push("/home");
+                this.$router.push("/HomeEmpleado/Listado");
               }
             },
             (error) => {
@@ -152,7 +154,7 @@ export default {
                 this.setEmail(this.email);
                 this.setTipo(this.tipo_user);
                 //modificar ruta
-                this.$router.push("/home");
+                this.$router.push("/HomeAdministrador");
               }
             },
             (error) => {
@@ -166,7 +168,7 @@ export default {
         this.alerta = true;
       }
     },
-    ...mapMutations(["logearse", "setEmail", "setTipo"]),
+    ...mapMutations(["logearse", "setEmail", "setId","setTipo"]),
   },
 };
 </script>

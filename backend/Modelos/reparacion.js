@@ -27,6 +27,11 @@ var Reparacion = db.sequelize.define('reparaciones', {
       type : Sequelize.INTEGER,
       reference: "vehiculos",
       referencesKey: "id"
+    },
+    idEmpleado:{
+      type : Sequelize.INTEGER,
+      reference: "empleados",
+      referencesKey: "id"
     }
     
   },{});
