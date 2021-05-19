@@ -14,7 +14,7 @@
             <v-img src="https://randomuser.me/api/portraits/men/85.jpg"></v-img>
           </v-list-item-avatar>
 
-          <v-list-item-title>John Leider</v-list-item-title>
+          <v-list-item-title>{{this.emailUsuario}}</v-list-item-title>
 
         </v-list-item>
 
@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   data() {
     return {
@@ -61,6 +62,9 @@ export default {
         { icon: "mdi-account", title: "Cuenta" },
       ],
     };
+  },
+  computed: {
+    ...mapState(["emailUsuario"]),
   },
   methods: {
     acciones(item) {

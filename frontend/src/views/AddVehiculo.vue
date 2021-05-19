@@ -36,7 +36,7 @@
                 <v-text-field v-model="matricula" label="Matricula" required></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field v-model="propietario" label="Propietario del vehiculo" required></v-text-field>
+                <v-text-field v-model="propietario" label="Email del propietario del vehiculo" required></v-text-field>
               </v-col>
               <v-spacer></v-spacer>
               <v-col class="d-flex ml-auto" cols="12" sm="3" xsm="12">
@@ -82,7 +82,7 @@ export default {
           modelo: this.modelo,
           anio: this.anio,
           matricula: this.matricula,
-          id_cliente: this.propietario,
+          email: this.propietario,
         };
         axios.post("http://localhost:3000/vehiculos/add", userData).then(
           (response) => {

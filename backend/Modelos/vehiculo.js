@@ -5,7 +5,11 @@ var Vehiculo = db.sequelize.define('vehiculos', {
       type: Sequelize.INTEGER,
       autoIncrement: true,
       primaryKey: true,
-      allowNull: true
+      allowNull: false
+    },
+    matricula:{
+      type: Sequelize.STRING(50),
+      allowNull: false
     },
     marca: {
       type: Sequelize.STRING(50),
@@ -15,11 +19,7 @@ var Vehiculo = db.sequelize.define('vehiculos', {
       type: Sequelize.STRING(50),
       allowNull: true
     },
-    matricula: {
-      type: Sequelize.STRING(45),
-      allowNull: false,
-      primaryKey: true,
-    },
+    
     anio: {
       type: Sequelize.INTEGER,
       allowNull: true
@@ -36,6 +36,19 @@ var Vehiculo = db.sequelize.define('vehiculos', {
       type: Sequelize.STRING(20),
       allowNull: true
     },
+    clienteId:{
+      type : Sequelize.INTEGER,
+      reference: "cliente",
+      referencesKey: "id"
+    }
+    
   },{});
 
+  Vehiculo.associate = modelos =>{
+    Vehiculo.hasMany(modelos.Reparacion,{
+      onDelete: 'cascade',
+    })
+  }
+  
   module.exports=Vehiculo
+  

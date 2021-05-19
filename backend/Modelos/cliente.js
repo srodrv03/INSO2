@@ -61,6 +61,5 @@ var Cliente = db.sequelize.define('clientes', {
       default: new Date()
     },
   },{});
-  const Vehiculo= require("./vehiculo")
-  Cliente.hasMany(Vehiculo,{foreingKey:"clienteId",onDelete: 'cascade'})
+ 
   module.exports=Cliente
