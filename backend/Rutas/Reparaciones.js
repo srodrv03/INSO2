@@ -6,6 +6,8 @@ const db = require("../database/db")
 const Reparacion = require("../Modelos/reparacion")
 const Cliente = require("../Modelos/cliente")
 const Vehiculo = require("../Modelos/vehiculo")
+const Componente = require("../Modelos/componente")
+const Comp_rep = require("../Modelos/componente_reparacion")
 const { Op } = require("sequelize");
 router.use(cors())
 
@@ -69,6 +71,34 @@ router.get("/listadototal", (req,res) =>{
     
     }).then((reparaciones) =>{
         res.json(reparaciones)
+    }).catch(err => {
+        console.log(err)
+    })
+})
+router.post("/listadopiezas",(req,res) =>{
+    Comp_rep.findAll({
+        where:{
+            idReparacion:req.body.idRep
+        }
+    
+    }).then( async (piezas) =>{
+        
+        if (piezas) {
+            var idpiezas=[]
+            for (var i of Object.keys(piezas)) {
+                idpiezas.push(piezas[i].dataValues.idComponente)
+            }
+            await Componente.findAll({
+                where: {
+                    id:{ [Op.in]: idpiezas}
+                }
+            }).then((listado) =>{
+                res.json(listado)
+            })
+
+        } else {
+            console.log("Error al consultar el listado de los vehiculos")
+        }
     }).catch(err => {
         console.log(err)
     })

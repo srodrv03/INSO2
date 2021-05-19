@@ -19,7 +19,7 @@
             grow
           >
             <v-tab v-for="item in items" :key="item.tab">
-              {{ item.tab }}
+              Reparacion {{ item.tab }}
             </v-tab>
           </v-tabs>
 
@@ -73,61 +73,53 @@
                     <v-col cols="3">
                       <v-select
                         :items="proveedores"
-                        item-text='nombre'
-                        item-value='nombre'
+                        item-text="nombre"
+                        item-value="nombre"
                         label="Proveedores"
                         outlined
                         @input="cambiaEtiqueta"
                       ></v-select>
                     </v-col>
-                    <v-col cols="3">
-                      <v-text-field
-                        class="font-weight-black"
-                        outlined
-                        v-model="seleccionado"
-                        color="black"
-                        label="Telefono"
-                      >{{seleccionado}}</v-text-field>
-                    </v-col>
                     <v-col cols="6">
-                      <v-text-field
-                        class="font-weight-black"
+                      <v-select
+                        v-model="e7"
+                        :items="piezas"
+                        item-text="nombre"
+                        label="Piezas"
+                        multiple
+                        chips
                         outlined
-                        color="black"
-                        label="IBAN"
-                      ></v-text-field>
+                        hint="Seleccione las piezas para añadir a la reparacion"
+                        persistent-hint
+                      ></v-select>
                     </v-col>
-                    <v-col cols="7">
-                      <v-text-field
-                        class="font-weight-black"
+                    <v-col cols="2">
+                      <v-btn
+                        class="ma-4"
                         outlined
-                        color="black"
-                        label="Dirección"
-                      ></v-text-field>
+                        color="indigo"
+                        @click="addPiezas(e7)"
+                      >
+                        Añadir piezas</v-btn
+                      >
                     </v-col>
-                    <v-col cols="5">
-                      <v-text-field
-                        class="font-weight-black"
-                        outlined
-                        color="black"
-                        label="Localidad"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="3" sm="3" md="3" lg="3">
-                      <v-text-field
-                        class="font-weight-black"
-                        outlined
-                        color="black"
-                        label="Código postal"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="3" sm="3" md="3" lg="3">
-                      <v-text-field
-                        class="font-weight-black"
-                        outlined
-                        color="black"
-                        label="País"
-                      ></v-text-field>
+                    <v-col cols="7" justify="center">
+                      <v-simple-table color="basil">
+                        <template v-slot:default color="basil">
+                          <thead>
+                            <tr>
+                              <th class="text-left">Nombre</th>
+                              <th class="text-left">Precio(€)</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr v-for="item in piezasrep" :key="item.nombre">
+                              <td>{{ item.nombre }}</td>
+                              <td>{{ item.precio }}</td>
+                            </tr>
+                          </tbody>
+                        </template>
+                      </v-simple-table>
                     </v-col>
                   </v-row>
                 </v-card-text>
@@ -151,16 +143,19 @@ export default {
   },
   data: () => ({
     tab: "",
+    e7: "",
     items: [],
-    seleccionado:"",
+    selecionado: "",
     reparaciones: [],
-    proveedores:[],
+    piezas: [],
+    piezasrep: [],
+    proveedores: [],
     idVehiculo: "",
     text: "ejemplo",
   }),
   mounted: function () {
     this.obtenerListado();
-    this.obtenerProveedores()
+    this.obtenerProveedores();
   },
   computed: {
     ...mapState(["emailUsuario", "id"]),
@@ -184,31 +179,85 @@ export default {
               ) {
                 this.reparaciones.push(response.data[i]);
                 this.items.push({
-                  tab: "Reparacion " + response.data[i].id,
+                  tab: response.data[i].id,
                   content: response.data[i].idVehiculo,
                 });
               }
             }
+            this.obtenerListadoPiezas(this.items[0].tab)
           }
         });
     },
-    obtenerProveedores(){
-        axios
+    obtenerProveedores() {
+      axios
         .get("http://localhost:3000/proveedores/listado")
         .then((response) => {
           if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
             console.log(response.data);
           } else {
             for (var i of Object.keys(response.data)) {
-              this.proveedores.push({id:response.data[i].id,nombre:response.data[i].nombre})
+              this.proveedores.push({
+                id: response.data[i].id,
+                nombre: response.data[i].nombre,
+              });
             }
-            console.log(this.proveedores)
           }
         });
-
     },
-    cambiaEtiqueta(event){
-        this.seleccionado=event
+    cambiaEtiqueta(event) {
+      const userdata = {
+        nombreProveedor: event,
+      };
+      axios
+        .post("http://localhost:3000/proveedores/listadopiezas", userdata)
+        .then((response) => {
+          if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
+            console.log(response.data);
+          } else {
+            for (var i of Object.keys(response.data)) {
+              //this.piezas.push(response.data[i]);
+              this.piezas.push({ nombre: response.data[i].nombre });
+            }
+            console.log(this.piezas);
+          }
+        });
+    },
+    addPiezas(lista) {
+      const userdata = {
+        idReparacion: this.items[this.tab].tab,
+        listaPiezas: lista,
+      };
+      axios
+        .post("http://localhost:3000/proveedores/addpiezas", userdata)
+        .then((response) => {
+          if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
+            console.log(response.data);
+          } else {
+            for (var i of Object.keys(response.data)) {
+              //this.piezas.push(response.data[i]);
+              this.piezas.push({ nombre: response.data[i].nombre });
+            }
+            this.obtenerListadoPiezas(userdata.idReparacion)
+          }
+        });
+    },
+    obtenerListadoPiezas(idreparacion){
+        const userdata={
+            idRep:idreparacion
+        }
+        axios
+              .post("http://localhost:3000/reparaciones/listadopiezas", userdata)
+              .then((response) => {
+                if (
+                  Object.prototype.hasOwnProperty.call(response.data, "error")
+                ) {
+                  console.log(response.data);
+                } else {
+                  for (var i of Object.keys(response.data)) {
+                    this.piezasrep.push({nombre:response.data[i].nombre})
+                  }
+                }
+              });
     }
   },
 };
