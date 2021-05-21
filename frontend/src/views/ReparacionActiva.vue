@@ -5,7 +5,7 @@
     </v-col>
     <v-row class="text-center" justify="center">
       <v-col cols="10">
-        <v-card color="basil" width="100%">
+        <v-card color="basil" width="100%" height="100%" fluid>
           <v-card-title class="text-center justify-center py-6">
             <h1 class="font-weight-bold display-3 basil--text">
               Reparaciones Activas
@@ -18,7 +18,11 @@
             color="basil"
             grow
           >
-            <v-tab v-for="item in items" :key="item.tab">
+            <v-tab
+              v-for="item in items"
+              :key="item.tab"
+              @click="actualizadatos(item.tab)"
+            >
               Reparacion {{ item.tab }}
             </v-tab>
           </v-tabs>
@@ -103,24 +107,35 @@
                         Añadir piezas</v-btn
                       >
                     </v-col>
-                    <v-col cols="7" justify="center">
-                      <v-simple-table color="basil">
-                        <template v-slot:default color="basil">
-                          <thead>
-                            <tr>
-                              <th class="text-left">Nombre</th>
-                              <th class="text-left">Precio(€)</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr v-for="item in piezasrep" :key="item.nombre">
-                              <td>{{ item.nombre }}</td>
-                              <td>{{ item.precio }}</td>
-                            </tr>
-                          </tbody>
-                        </template>
-                      </v-simple-table>
-                    </v-col>
+                    <v-row class="text-center" justify="center">
+                      <v-col cols="7" justify="center">
+                        <v-simple-table class="basil">
+                          <template v-slot:default>
+                            <thead>
+                              <tr class="basil1">
+                                <th class="text-left">Nombre</th>
+                                <th class="text-left">Precio(€)</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr v-for="item in piezasrep" :key="item.nombre">
+                                <td>{{ item.nombre }}</td>
+                                <td>{{ item.precio }}</td>
+                              </tr>
+                            </tbody>
+                          </template>
+                        </v-simple-table>
+                      </v-col>
+                      <v-col cols="2" justify="center">
+                        <v-btn
+                          class="ma-2 ml-10"
+                          color="basil1"
+                          @click="finalizaRep()"
+                        >
+                          Finalizar reparacion</v-btn
+                        >
+                      </v-col>
+                    </v-row>
                   </v-row>
                 </v-card-text>
               </v-card>
@@ -184,7 +199,7 @@ export default {
                 });
               }
             }
-            this.obtenerListadoPiezas(this.items[0].tab)
+            this.obtenerListadoPiezas(this.items[0].tab);
           }
         });
     },
@@ -237,28 +252,51 @@ export default {
               //this.piezas.push(response.data[i]);
               this.piezas.push({ nombre: response.data[i].nombre });
             }
-            this.obtenerListadoPiezas(userdata.idReparacion)
+            this.obtenerListadoPiezas(userdata.idReparacion);
           }
         });
     },
-    obtenerListadoPiezas(idreparacion){
-        const userdata={
-            idRep:idreparacion
-        }
-        axios
-              .post("http://localhost:3000/reparaciones/listadopiezas", userdata)
-              .then((response) => {
-                if (
-                  Object.prototype.hasOwnProperty.call(response.data, "error")
-                ) {
-                  console.log(response.data);
-                } else {
-                  for (var i of Object.keys(response.data)) {
-                    this.piezasrep.push({nombre:response.data[i].nombre})
-                  }
-                }
+    obtenerListadoPiezas(idreparacion) {
+      const userdata = {
+        idRep: idreparacion,
+      };
+      axios
+        .post("http://localhost:3000/reparaciones/listadopiezas", userdata)
+        .then((response) => {
+          if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
+            console.log(response.data);
+          } else {
+            this.piezasrep = [];
+            for (var i of Object.keys(response.data)) {
+              this.piezasrep.push({
+                nombre: response.data[i].nombre,
+                precio: response.data[i].precio,
               });
-    }
+            }
+          }
+        });
+    },
+    actualizadatos(itemReparacion) {
+      this.obtenerListadoPiezas(itemReparacion);
+    },
+    finalizaRep() {
+      var msgTotal = this.piezasrep.reduce(function (prev, cur) {
+        return prev + parseFloat(cur.precio);
+      }, 0);
+      const userdata = {
+        idReparacion: this.items[this.tab].tab,
+        importe:parseFloat(msgTotal)
+      };
+      axios
+        .post("http://localhost:3000/reparaciones/finalizaReparacion", userdata)
+        .then((response) => {
+          if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
+            console.log(response.data);
+          } else {
+            console.log("hola");
+          }
+        });
+    },
   },
 };
 </script>
@@ -266,6 +304,9 @@ export default {
 /* Helper classes */
 .basil {
   background-color: #fffbe6 !important;
+}
+.basil1 {
+  background-color: #f5e07a !important;
 }
 .basil--text {
   color: #356859 !important;

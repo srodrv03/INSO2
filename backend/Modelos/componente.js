@@ -4,6 +4,7 @@ const db = require("../database/db")
 var Componente= db.sequelize.define('componentes', {
     id: {
       type: Sequelize.INTEGER,
+      autoIncrement: true,
       allowNull: false,
       primaryKey: true
     },
@@ -15,6 +16,10 @@ var Componente= db.sequelize.define('componentes', {
       type : Sequelize.INTEGER,
       reference: "proveedor",
       referencesKey: "id"
+    },
+    precio:{
+      type : Sequelize.DECIMAL(6,2),
+      allowNull: true
     },
   }, {}
 );

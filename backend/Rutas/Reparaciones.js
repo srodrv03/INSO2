@@ -7,6 +7,7 @@ const Reparacion = require("../Modelos/reparacion")
 const Cliente = require("../Modelos/cliente")
 const Vehiculo = require("../Modelos/vehiculo")
 const Componente = require("../Modelos/componente")
+const Factura = require("../Modelos/factura")
 const Comp_rep = require("../Modelos/componente_reparacion")
 const { Op } = require("sequelize");
 router.use(cors())
@@ -118,6 +119,37 @@ router.post("/iniciareparacion", (req,res) =>{
             res.json({resp:"correcto"})
         })
     }).catch(err => {
+        res.json({ error: "No se ha podido modificar correctamente el estado" })
+    })
+})
+
+router.post("/finalizaReparacion", (req,res) =>{
+
+    Reparacion.findOne({
+        where:{
+            id:req.body.idReparacion
+        }
+    })
+    .then(reparacion => {
+        const diffTime = Math.abs(reparacion.updatedAt - reparacion.createdAt);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+        const userData={
+            manoObra:diffDays*50,
+            materiales: req.body.importe
+        }
+        console.log(req.body.importe)
+        Factura.create(userData).then(factura =>{
+            reparacion.update({
+                idFactura:factura.id
+            }).then(user => {
+                    console.log(user)
+                })
+        }).catch(err => {
+            console.log(err)
+            res.json({ error: "No se ha podido modificar correctamente el estado" })
+        })
+    }).catch(err => {
+        console.log(err)
         res.json({ error: "No se ha podido modificar correctamente el estado" })
     })
 })
