@@ -140,7 +140,8 @@ router.post("/finalizaReparacion", (req,res) =>{
         console.log(req.body.importe)
         Factura.create(userData).then(factura =>{
             reparacion.update({
-                idFactura:factura.id
+                idFactura:factura.id,
+                //estado:"FINALIZADA"
             }).then(user => {
                     console.log(user)
                 })

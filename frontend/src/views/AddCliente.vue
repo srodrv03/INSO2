@@ -5,7 +5,14 @@
         <v-card-title class="text-h3 text-center">
           Añadir Cliente
         </v-card-title>
-        <v-alert :value="visibleAlerta" justify-center type="error" height="40" dense>Ese Email ya ha sido registrado.</v-alert>
+        <v-alert
+          :value="visibleAlerta"
+          justify-center
+          type="error"
+          height="40"
+          dense
+          >Ese Email ya ha sido registrado.</v-alert
+        >
         <v-card-text>
           <v-form ref="registerForm" v-model="valid" lazy-validation>
             <v-row>
@@ -85,7 +92,7 @@ export default {
   data() {
     return {
       valid: true,
-      visibleAlerta:false,
+      visibleAlerta: false,
       nombre: "",
       apellidos: "",
       email: "",
@@ -113,7 +120,7 @@ export default {
           apellidos: this.apellidos,
           email: this.email,
           pass: this.password,
-          DNI: this.DNI
+          DNI: this.DNI,
         };
         axios.post("http://localhost:3000/clientes/registro", userData).then(
           (response) => {

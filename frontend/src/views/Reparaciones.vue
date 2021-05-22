@@ -4,7 +4,7 @@
       <Menu />
     </v-col>
     <v-col cols="10">
-     <v-card>
+      <v-card>
         <v-card-title>
           Reparaciones
           <v-spacer></v-spacer>
@@ -25,7 +25,6 @@
           item-key="name"
           class="elevation-1"
         >
-
         </v-data-table>
       </v-card>
     </v-col>
@@ -33,9 +32,9 @@
 </template>
 
 <script>
-const axios= require("axios");
+const axios = require("axios");
 import { mapState } from "vuex";
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
 import Menu from "@/components/Menu.vue";
 export default {
   components: {
@@ -44,7 +43,7 @@ export default {
   data: () => ({
     dialog: false,
     dialogDelete: false,
-    searchReparacion:"",
+    searchReparacion: "",
     cabeceraReparacion: [
       { text: "Identificador Reparacion", value: "id" },
       { text: "Identificador Vehiculo", value: "idVehiculo" },
@@ -53,18 +52,18 @@ export default {
       { text: "Descripción", value: "descripcion" },
       { text: "Estado", value: "estado" },
     ],
-    listaReparacion:[],
+    listaReparacion: [],
   }),
-  mounted: function (){
-    this.obtenerReparaciones()
+  mounted: function () {
+    this.obtenerReparaciones();
   },
   computed: {
     ...mapState(["emailUsuario"]),
   },
-  
+
   methods: {
-    obtenerReparaciones(){
-const userdata = {
+    obtenerReparaciones() {
+      const userdata = {
         email: this.emailUsuario,
       };
       axios
@@ -73,16 +72,19 @@ const userdata = {
           if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
             console.log(response.data);
           } else {
-            
             for (var i of Object.keys(response.data)) {
-           
-              response.data[i].createdAt=dayjs(response.data[i].createdAt).format('D MMMM, YYYY')
+              response.data[i].createdAt = dayjs(
+                response.data[i].createdAt
+              ).format("D MMMM, YYYY");
               this.listaReparacion.push(response.data[i]);
+              if (response.data[i].estado == "FINALIZADA")
+                this.listaReparacion[i].fechaFin = dayjs(
+                  response.data[i].updatedAt
+                ).format("D MMMM, YYYY");
             }
           }
         });
     },
-    
   },
 };
 </script>

@@ -31,10 +31,9 @@
             <v-tab-item v-for="item in items" :key="item.tab">
               <v-card
                 class="mr-5 ml-5 mt-5"
-                color="basil"
+                color="white"
                 max-width="max"
                 outlined
-                elevation="24"
               >
                 <v-card-title class="justify-center">
                   <span class="headline font-weight-black"
@@ -43,7 +42,7 @@
                 </v-card-title>
                 <v-card-text class="justify-center mt-5">
                   <v-row>
-                    <v-col cols="6">
+                    <v-col cols="3">
                       <v-text-field
                         class="font-weight-black"
                         outlined
@@ -54,7 +53,7 @@
                         >{{ item.tab }}</v-text-field
                       >
                     </v-col>
-                    <v-col cols="4">
+                    <v-col cols="3">
                       <v-text-field
                         class="font-weight-black"
                         outlined
@@ -65,14 +64,16 @@
                         >{{ item.content }}</v-text-field
                       >
                     </v-col>
-                    <v-col cols="2">
+                    <v-col cols="6">
                       <v-text-field
                         class="font-weight-black"
                         outlined
                         color="black"
+                        v-model="item.descrip"
                         disabled
-                        label="DNI"
-                      ></v-text-field>
+                        label="Descripcion"
+                        >{{ item.descrip }}</v-text-field
+                      >
                     </v-col>
                     <v-col cols="3">
                       <v-select
@@ -113,8 +114,12 @@
                           <template v-slot:default>
                             <thead>
                               <tr class="basil1">
-                                <th class="text-left">Nombre</th>
-                                <th class="text-left">Precio(€)</th>
+                                <th class="text-left font-weight-black basil1">
+                                  Nombre
+                                </th>
+                                <th class="text-left font-weight-black basil1">
+                                  Precio(€)
+                                </th>
                               </tr>
                             </thead>
                             <tbody>
@@ -196,6 +201,7 @@ export default {
                 this.items.push({
                   tab: response.data[i].id,
                   content: response.data[i].idVehiculo,
+                  descrip: response.data[i].descripcion,
                 });
               }
             }
@@ -285,7 +291,7 @@ export default {
       }, 0);
       const userdata = {
         idReparacion: this.items[this.tab].tab,
-        importe:parseFloat(msgTotal)
+        importe: parseFloat(msgTotal),
       };
       axios
         .post("http://localhost:3000/reparaciones/finalizaReparacion", userdata)
@@ -293,7 +299,7 @@ export default {
           if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
             console.log(response.data);
           } else {
-            console.log("hola");
+            this.obtenerListado();
           }
         });
     },
@@ -303,12 +309,13 @@ export default {
 <style>
 /* Helper classes */
 .basil {
-  background-color: #fffbe6 !important;
+  background-color: #e0fdf8b7 !important;
 }
 .basil1 {
-  background-color: #f5e07a !important;
+  background-color: #3d3d3d !important;
+  color: #ffffff !important;
 }
 .basil--text {
-  color: #356859 !important;
+  color: #000000 !important;
 }
 </style>

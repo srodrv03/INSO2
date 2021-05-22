@@ -4,7 +4,7 @@
       expand-on-hover
       v-model="drawer"
       app
-      class="blue lighten-5"
+     color="#05C7F2"
       :mini-variant.sync="mini"
       permanent
     >
