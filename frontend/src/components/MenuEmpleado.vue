@@ -4,7 +4,7 @@
       expand-on-hover
       v-model="drawer"
       app
-     color="#05C7F2"
+      color="#05C7F2"
       :mini-variant.sync="mini"
       permanent
     >
@@ -52,14 +52,13 @@ export default {
       mini: false,
       items: [
         {
-          icon: "mdi-car",
-          title: "Mis vehículos",
+          icon: "mdi-clipboard-list-outline",
+          title: "Listado de Reparaciones",
         },
         {
           icon: "mdi-tools",
-          title: "Reparaciones",
+          title: "Mis Reparaciones Activas",
         },
-        { icon: "mdi-account", title: "Cuenta" },
       ],
     };
   },
@@ -68,12 +67,10 @@ export default {
   },
   methods: {
     acciones(item) {
-      if (item.title == "Mis vehículos") {
-        this.$router.push("/HomeCliente/Vehiculos");
-      } else if (item.title == "Reparaciones") {
-        this.$router.push("/HomeCliente/Reparaciones");
-      } else if (item.title == "Cuenta") {
-        this.$router.push("/HomeCliente/cuenta");
+      if (item.title == "Listado de Reparaciones") {
+        this.$router.push("/HomeEmpleado/Listado");
+      } else if (item.title == "Mis Reparaciones Activas") {
+        this.$router.push("/HomeEmpleado/ReparacionesActivas");
       }
     },
   },

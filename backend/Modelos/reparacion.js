@@ -11,11 +11,11 @@ var Reparacion = db.sequelize.define('reparaciones', {
       type: Sequelize.STRING(255),
       allowNull: true
     },
-    fecha_inicio: {
+    createdAt: {
       type: Sequelize.DATEONLY,
       allowNull: true
     },
-    fecha_fin: {
+    updatedAt: {
       type: Sequelize.DATEONLY,
       allowNull: true
     },
@@ -26,6 +26,16 @@ var Reparacion = db.sequelize.define('reparaciones', {
     idVehiculo:{
       type : Sequelize.INTEGER,
       reference: "vehiculos",
+      referencesKey: "id"
+    },
+    idEmpleado:{
+      type : Sequelize.INTEGER,
+      reference: "empleados",
+      referencesKey: "id"
+    },
+    idFactura:{
+      type : Sequelize.INTEGER,
+      reference: "facturas",
       referencesKey: "id"
     }
     

@@ -8,7 +8,8 @@ export default new Vuex.Store({
   state: {
     logged: false,
     emailUsuario: '',
-    tipousuario:''
+    tipousuario:'',
+    id:"",
   },
   plugins: [createPersistedState()],
   mutations: {
@@ -21,6 +22,9 @@ export default new Vuex.Store({
     },
     setEmail(state, msg){
       state.emailUsuario = msg
+    },
+    setId(state, msg){
+      state.id=msg
     },
     setTipo(state, msg){
       state.tipousuario = msg

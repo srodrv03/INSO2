@@ -5,7 +5,14 @@
         <v-card-title class="text-h3 text-center">
           Añadir Vehiculo
         </v-card-title>
-        <v-alert :value="visibleAlerta" justify-center type="error" height="40" dense>{{msgAlerta}}</v-alert>
+        <v-alert
+          :value="visibleAlerta"
+          justify-center
+          type="error"
+          height="40"
+          dense
+          >{{ msgAlerta }}</v-alert
+        >
         <v-card-text>
           <v-form ref="registerForm" v-model="valid" lazy-validation>
             <v-row>
@@ -33,10 +40,18 @@
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6" md="6">
-                <v-text-field v-model="matricula" label="Matricula" required></v-text-field>
+                <v-text-field
+                  v-model="matricula"
+                  label="Matricula"
+                  required
+                ></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field v-model="propietario" label="Email del propietario del vehiculo" required></v-text-field>
+                <v-text-field
+                  v-model="propietario"
+                  label="Email del propietario del vehiculo"
+                  required
+                ></v-text-field>
               </v-col>
               <v-spacer></v-spacer>
               <v-col class="d-flex ml-auto" cols="12" sm="3" xsm="12">
@@ -62,13 +77,13 @@ export default {
   data() {
     return {
       valid: true,
-      visibleAlerta:false,
+      visibleAlerta: false,
       marca: "",
       modelo: "",
       anio: "",
       matricula: "",
       propietario: "",
-      msgAlerta:"",
+      msgAlerta: "",
       rules: {
         required: (value) => !!value || "Obligatorio.",
       },
@@ -87,7 +102,7 @@ export default {
         axios.post("http://localhost:3000/vehiculos/add", userData).then(
           (response) => {
             if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
-              this.msgAlerta=response.data.error;
+              this.msgAlerta = response.data.error;
               this.visibleAlerta = true;
             } else {
               ///modificar el push al home
@@ -102,7 +117,6 @@ export default {
     },
   },
   mounted() {},
-  computed: {
-  },
+  computed: {},
 };
 </script>

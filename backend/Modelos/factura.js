@@ -1,37 +1,33 @@
 const Sequelize = require('sequelize');
 const db = require("../database/db")
-module.exports = function(sequelize) {
-  return db.sequelize.define('factura', {
+var Factura= db.sequelize.define('facturas', {
     id: {
       type: Sequelize.INTEGER,
+      autoIncrement: true,
       allowNull: false,
       primaryKey: true
     },
-    fecha: {
+    createdAt: {
       type: Sequelize.DATEONLY,
       allowNull: true
     },
-    impuesto: {
-      type: Sequelize.INTEGER,
+    materiales:{
+      type : Sequelize.DECIMAL(6,2),
       allowNull: true
     },
-    importe: {
-      type: Sequelize.INTEGER,
+    impuesto: {
+      type : Sequelize.DECIMAL(6,2),
+      allowNull: true
+    },
+    manoObra:{
+      type : Sequelize.DECIMAL(6,2),
+      allowNull: true
+
+    },
+    total: {
+      type : Sequelize.DECIMAL(6,2),
       allowNull: true
     }
-  }, {
-    sequelize,
-    tableName: 'factura',
-    timestamps: false,
-    indexes: [
-      {
-        name: "PRIMARY",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "id" },
-        ]
-      },
-    ]
-  });
-};
+  }, {});
+
+module.exports=Factura

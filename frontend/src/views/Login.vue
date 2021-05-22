@@ -2,7 +2,7 @@
   <v-main>
     <v-row class="text-center">
       <v-col class="mb-4">
-        <h1 class="display-2 font-weight-bold mb-3">Bienvenido</h1>
+        <h1 class="display-2 white--text mb-3 text-sub">Bienvenido</h1>
       </v-col>
 
       <v-col class="mb-5" cols="12">
@@ -47,7 +47,7 @@
                 dark
                 v-model="tipo_user"
                 prepend-icon="mdi-fingerprint"
-                :items="['Empleado', 'Cliente','Administrador']"
+                :items="['Empleado', 'Cliente', 'Administrador']"
                 label="Tipo de usuario"
               ></v-select>
             </v-row>
@@ -85,7 +85,7 @@ export default {
     alerta: false,
   }),
   computed: {
-    ...mapState(["logged", "emailUsuario", "tipoUsuario"]),
+    ...mapState(["logged", "emailUsuario", "tipoUsuario", "id"]),
   },
   methods: {
     iniciar() {
@@ -116,7 +116,7 @@ export default {
               console.log(error);
             }
           );
-        } else if(this.tipo_user == "Empleado"){
+        } else if (this.tipo_user == "Empleado") {
           axios.post("http://localhost:3000/empleados/login", userData).then(
             (response) => {
               if (
@@ -129,44 +129,47 @@ export default {
               } else {
                 this.logearse();
                 this.setEmail(this.email);
-                this.setTipo(this.tipo_user);
-                this.$router.push("/home");
-              }
-            },
-            (error) => {
-              console.log(error);
-            }
-          );
-        }else{
-          axios.post("http://localhost:3000/empleados/loginAdmin", userData).then(
-            (response) => {
-              if (
-                Object.prototype.hasOwnProperty.call(response.data, "error")
-              ) {
-                this.password = "";
-                this.email = "";
-                this.alerta_msg = "La contraseña/email no son correctos.";
-                this.alerta = true;
-              } else {
-                this.logearse();
-                this.setEmail(this.email);
-                this.setTipo(this.tipo_user);
-                //modificar ruta
-                this.$router.push("/home");
-              }
-            },
-            (error) => {
-              console.log(error);
-            }
-          );
 
+                this.setId(response.data.id);
+                this.setTipo(this.tipo_user);
+                this.$router.push("/HomeEmpleado/Listado");
+              }
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+        } else {
+          axios
+            .post("http://localhost:3000/empleados/loginAdmin", userData)
+            .then(
+              (response) => {
+                if (
+                  Object.prototype.hasOwnProperty.call(response.data, "error")
+                ) {
+                  this.password = "";
+                  this.email = "";
+                  this.alerta_msg = "La contraseña/email no son correctos.";
+                  this.alerta = true;
+                } else {
+                  this.logearse();
+                  this.setEmail(this.email);
+                  this.setTipo(this.tipo_user);
+                  //modificar ruta
+                  this.$router.push("/HomeAdministrador");
+                }
+              },
+              (error) => {
+                console.log(error);
+              }
+            );
         }
       } else {
         this.alerta_msg = "Complete todos los campos";
         this.alerta = true;
       }
     },
-    ...mapMutations(["logearse", "setEmail", "setTipo"]),
+    ...mapMutations(["logearse", "setEmail", "setId", "setTipo"]),
   },
 };
 </script>

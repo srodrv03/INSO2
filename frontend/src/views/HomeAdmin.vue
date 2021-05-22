@@ -1,14 +1,14 @@
 <template>
   <v-main>
     <v-row justify="center">
-          <v-alert dismissible :type=tipo_alerta v-if="alerta">
-            <v-row>
-              <v-col>
-                <span class="font-weight-black">{{ this.alerta_msg }}</span>
-              </v-col>
-            </v-row>
-          </v-alert>
+      <v-alert dismissible :type="tipo_alerta" v-if="alerta">
+        <v-row>
+          <v-col>
+            <span class="font-weight-black">{{ this.alerta_msg }}</span>
+          </v-col>
         </v-row>
+      </v-alert>
+    </v-row>
     <v-row class="text-center" justify="center">
       <v-col class="mb-4" cols="10">
         <v-card>
@@ -24,16 +24,14 @@
             ></v-text-field>
             <v-spacer></v-spacer>
             <router-link to="/AddEmpleado" tag="button"
-                  ><v-btn color="green" light
-                    >Añadir Empleado</v-btn
-                  ></router-link
-                >
+              ><v-btn color="green" light>Añadir Empleado</v-btn></router-link
+            >
           </v-card-title>
           <v-data-table
             dense
             :headers="cabeceraEmpleados"
             :items="listaEmpleados"
-            :search='searchEmpleados'
+            :search="searchEmpleados"
             item-key="name"
             class="elevation-1"
           >
@@ -41,7 +39,7 @@
               <v-btn
                 @click="creaDialogDelete(item, 0)"
                 color="red"
-                style="width:80px; height:22px"
+                style="width: 80px; height: 22px"
                 small
                 v-model="item.borrarButton"
                 >Eliminar</v-btn
@@ -66,10 +64,8 @@
             ></v-text-field>
             <v-spacer></v-spacer>
             <router-link to="/AddCliente" tag="button"
-                  ><v-btn color="green" light
-                    >Añadir Cliente</v-btn
-                  ></router-link
-                >
+              ><v-btn color="green" light>Añadir Cliente</v-btn></router-link
+            >
           </v-card-title>
           <v-data-table
             dense
@@ -84,7 +80,7 @@
                 @click="creaDialogDelete(item, 1)"
                 color="red"
                 small
-                style="width:80px; height:22px"
+                style="width: 80px; height: 22px"
                 v-model="item.borrarButton"
                 >Eliminar</v-btn
               >
@@ -108,10 +104,8 @@
             ></v-text-field>
             <v-spacer></v-spacer>
             <router-link to="/AddVehiculo" tag="button"
-                  ><v-btn color="green" light
-                    >Añadir Vehiculo</v-btn
-                  ></router-link
-                >
+              ><v-btn color="green" light>Añadir Vehiculo</v-btn></router-link
+            >
           </v-card-title>
           <v-data-table
             dense
@@ -126,7 +120,7 @@
                 @click="creaDialogDelete(item, 2)"
                 color="red"
                 small
-                style="width:80px; height:22px"
+                style="width: 80px; height: 22px"
                 v-model="item.borrarButton"
                 >Eliminar</v-btn
               >
@@ -148,7 +142,10 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="red" text @click="dialog = false">Cancelar</v-btn>
-            <v-btn color="green" text @click="confirmarEliminacion(tipo,elemento)"
+            <v-btn
+              color="green"
+              text
+              @click="confirmarEliminacion(tipo, elemento)"
               >Confirmar</v-btn
             >
           </v-card-actions>
@@ -162,19 +159,19 @@ const axios = require("axios");
 export default {
   data: () => ({
     dialog: false,
-    elemento:"",
-    tipo_alerta:"",
-    alerta:false,
-    alerta_msg:"",
+    elemento: "",
+    tipo_alerta: "",
+    alerta: false,
+    alerta_msg: "",
     tipo: "",
     prueba: "",
     tab_activa: "",
     textoDialog: "",
-    searchEmpleados:"",
+    searchEmpleados: "",
     listaEmpleados: [],
-    searchCliente:"",
+    searchCliente: "",
     listaClientes: [],
-    searchVehiculo:"",
+    searchVehiculo: "",
     listaVehiculos: [],
     cabeceraEmpleados: [
       {
@@ -212,16 +209,14 @@ export default {
       },
       { text: "Marca", value: "marca" },
       { text: "Modelo", value: "modelo" },
-      { text: "Matricula", value: "matricula"},
+      { text: "Matricula", value: "matricula" },
       { text: "Año de matriculacion", value: "anio" },
       { text: "Propietario", value: "clienteId" },
       { text: "", value: "borrarButton" },
     ],
   }),
-  mounted: function(){
-    this.obtenerEmpleados(),
-    this.obtenerClientes(),
-    this.obtenerVehiculos()
+  mounted: function () {
+    this.obtenerEmpleados(), this.obtenerClientes(), this.obtenerVehiculos();
   },
   methods: {
     creaDialogDelete(item, numtabla) {
@@ -236,7 +231,7 @@ export default {
           item.apellido2 +
           "?";
         this.tipo = 0;
-        this.elemento=item
+        this.elemento = item;
         this.dialog = true;
       } else if (numtabla == "1") {
         this.textoDialog =
@@ -247,7 +242,7 @@ export default {
           " " +
           item.apellido2 +
           "? \n Esto eliminara tambien todos sus vehiculos";
-        this.elemento=item
+        this.elemento = item;
         this.dialog = true;
         this.tipo = 1;
       } else if (numtabla == "2") {
@@ -259,7 +254,7 @@ export default {
           " " +
           item.matricula +
           "? \n Esto eliminara tambien todas sus reparaciones";
-        this.elemento=item
+        this.elemento = item;
         this.dialog = true;
         this.tipo = 2;
       }
@@ -278,9 +273,8 @@ export default {
     obtenerClientes() {
       axios.get("http://localhost:3000/clientes/listado").then((response) => {
         if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
-          console.log(response.data)
+          console.log(response.data);
         } else {
-    
           for (var i of Object.keys(response.data)) {
             this.listaClientes.push(response.data[i]);
           }
@@ -298,64 +292,70 @@ export default {
         }
       });
     },
-    confirmarEliminacion(tipo,elemento) {
+    confirmarEliminacion(tipo, elemento) {
       if (tipo == 0) {
-        const userData ={
-            email: elemento.email
-        }
-        
-      axios.post("http://localhost:3000/empleados/delete",userData).then((response) => {
-          if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
-            this.alerta_msg= response.data.error
-            this.tipo_alerta="error"
-            this.alerta=true
-          } else {
-            this.alerta_msg= response.data.correcto
-            this.tipo_alerta="success"
-            this.alerta=true
-          }
-          this.listaEmpleados=[]
-          this.obtenerEmpleados()
-        })
+        const userData = {
+          email: elemento.email,
+        };
+
+        axios
+          .post("http://localhost:3000/empleados/delete", userData)
+          .then((response) => {
+            if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
+              this.alerta_msg = response.data.error;
+              this.tipo_alerta = "error";
+              this.alerta = true;
+            } else {
+              this.alerta_msg = response.data.correcto;
+              this.tipo_alerta = "success";
+              this.alerta = true;
+            }
+            this.listaEmpleados = [];
+            this.obtenerEmpleados();
+          });
       } else if (tipo == 1) {
-        const userData ={
-            email: elemento.email
-        }
-        
-      axios.post("http://localhost:3000/clientes/delete",userData).then((response) => {
-          if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
-            this.alerta_msg= response.data.error
-            this.tipo_alerta="error"
-            this.alerta=true
-          } else {
-            this.alerta_msg= response.data.correcto
-            this.tipo_alerta="success"
-            this.alerta=true
-          }
-          this.listaClientes=[]
-          this.obtenerClientes()
-          this.listaVehiculos=[]
-          this.obtenerVehiculos()
-        });
+        const userData = {
+          email: elemento.email,
+        };
+
+        axios
+          .post("http://localhost:3000/clientes/delete", userData)
+          .then((response) => {
+            if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
+              this.alerta_msg = response.data.error;
+              this.tipo_alerta = "error";
+              this.alerta = true;
+            } else {
+              this.alerta_msg = response.data.correcto;
+              this.tipo_alerta = "success";
+              this.alerta = true;
+            }
+            this.listaClientes = [];
+            this.obtenerClientes();
+            this.listaVehiculos = [];
+            this.obtenerVehiculos();
+          });
       } else if (tipo == 2) {
-        const vehiculoData ={
-            matricula: elemento.matricula
-        }
-        axios.post("http://localhost:3000/vehiculos/delete",vehiculoData).then((response) => {
-          if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
-            this.alerta_msg= response.data.error
-            this.tipo_alerta="error"
-            this.alerta=true
-          } else {
-            this.alerta_msg= response.data.correcto
-            this.tipo_alerta="success"
-            this.alerta=true
-          }
-          this.listaVehiculos=[]
-          this.obtenerVehiculos()
-        });
+        const vehiculoData = {
+          matricula: elemento.matricula,
+        };
+        axios
+          .post("http://localhost:3000/vehiculos/delete", vehiculoData)
+          .then((response) => {
+            if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
+              this.alerta_msg = response.data.error;
+              this.tipo_alerta = "error";
+              this.alerta = true;
+            } else {
+              this.alerta_msg = response.data.correcto;
+              this.tipo_alerta = "success";
+              this.alerta = true;
+            }
+            this.listaVehiculos = [];
+            this.obtenerVehiculos();
+          });
       }
-      this.dialog=false
+      this.dialog = false;
     },
   },
 };
