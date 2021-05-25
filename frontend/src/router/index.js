@@ -25,7 +25,7 @@ const routes = [
 
   },{
     path: '/HomeEmpleado/Listado',
-    name: 'HomeEmpleado',
+    name: 'HomeEmpleadoListado',
     component: () => import('../views/EmpleadoReparaciones.vue'),
     meta: {
       requiresAuth: true
@@ -33,7 +33,7 @@ const routes = [
   },
   {
     path: '/HomeEmpleado/ReparacionesActivas',
-    name: 'HomeEmpleado',
+    name: 'HomeEmpleadoReparacion',
     component: () => import('../views/ReparacionActiva.vue'),
     meta: {
       requiresAuth: true
@@ -74,6 +74,13 @@ const routes = [
     path: '/HomeCliente/Vehiculos',
     name: '/HomeCliente/Vehiculos',
     component: () => import('../views/Vehiculos.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },{
+    path: '/HomeCliente/Facturas',
+    name: '/HomeCliente/Facturas',
+    component: () => import('../views/FacturasCliente.vue'),
     meta: {
       requiresAuth: true
     }

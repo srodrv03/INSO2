@@ -14,7 +14,7 @@ router.post("/login", (req, res) => {
         }
     }).then(user => {
         if(bcrypt.compareSync(req.body.pass, user.password)) {
-            res.json({ autorizacion: "correcto" })
+            res.json({ autorizacion: "correcto", id:user.id })
         }
         else {
             res.json({ error: "Datos incorrectos" })
