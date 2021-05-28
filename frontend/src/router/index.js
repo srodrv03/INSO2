@@ -7,6 +7,15 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '/',
+    name: 'home',
+    
+    meta: {
+      requiresAuth: true
+    }
+
+  },
+  {
     path: '/Login',
     name: 'Inicio',
     component: () => import('../views/Login.vue'),
@@ -28,7 +37,8 @@ const routes = [
     name: 'HomeEmpleadoListado',
     component: () => import('../views/EmpleadoReparaciones.vue'),
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      emp:true
     }
   },
   {
@@ -36,14 +46,16 @@ const routes = [
     name: 'HomeEmpleadoReparacion',
     component: () => import('../views/ReparacionActiva.vue'),
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      emp:true
     }
   },{
     path: '/HomeAdministrador',
     name: 'HomeAdministrador',
     component: () => import('../views/HomeAdmin.vue'),
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      add:true
     }
 
   },{
@@ -51,7 +63,8 @@ const routes = [
     name: 'AddCliente',
     component: () => import('../views/AddCliente.vue'),
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      add:true
     }
   }
     ,{
@@ -59,7 +72,8 @@ const routes = [
     name: 'AddEmpleado',
     component: () => import('../views/AddEmpleado.vue'),
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      add:true
     }
   }
   ,{
@@ -67,7 +81,8 @@ const routes = [
     name: 'AddVehiculo',
     component: () => import('../views/AddVehiculo.vue'),
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      add:true
     }
   }
   ,{
@@ -75,14 +90,16 @@ const routes = [
     name: '/HomeCliente/Vehiculos',
     component: () => import('../views/Vehiculos.vue'),
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      cli:true
     }
   },{
     path: '/HomeCliente/Facturas',
     name: '/HomeCliente/Facturas',
     component: () => import('../views/FacturasCliente.vue'),
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      cli:true
     }
   }
   ,{
@@ -90,7 +107,8 @@ const routes = [
     name: '/HomeCliente/Reparaciones',
     component: () => import('../views/Reparaciones.vue'),
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      cli:true
     }
   }
   ,{
@@ -98,7 +116,8 @@ const routes = [
     name: '/HomeCliente/cuenta',
     component: () => import('../views/Cuenta.vue'),
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      cli:true
     }
   }
 ] 
@@ -122,14 +141,46 @@ router.beforeEach((to, from, next) => {
 
   if (to.matched.some(record => record.meta.hideForAuth)) {
     if (store.state.logged) {
-    
       next({ path: '/HomeAdministrador' });
 
     } else {
         next();
     }
-} else {
+  } else {
     next();
+  }
+  if (to.matched.some(record => record.meta.admin)) {
+    if (store.state.tipousuario=="Empleado") {
+      next({ path: '/HomeEmpleado/Listado' });
+    }else if (store.state.tipousuario=="Cliente") {
+        next({ path: '/HomeCliente/Vehiculos' });
+    } else {
+        next();
+    }
+  } else {
+    next();
+}
+if (to.matched.some(record => record.meta.cli)) {
+  if (store.state.tipousuario=="Administrador") {
+    next({ path: '/HomeAdministrador' });
+  }else if (store.state.tipousuario=="Empleado") {
+    next({ path: '/HomeEmpleado/Listado' });
+  } else {
+      next();
+  }
+} else {
+  next();
+}
+if (to.matched.some(record => record.meta.emp)) {
+  if (store.state.tipousuario=="Administrador") {
+    next({ path: '/HomeAdministrador' });
+  }else if (store.state.tipousuario=="Cliente") {
+    next({ path: '/HomeCliente/Vehiculos' });
+  } else {
+      next();
+  }
+} else {
+  next();
 }
 })
 

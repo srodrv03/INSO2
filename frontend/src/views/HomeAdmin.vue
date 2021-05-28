@@ -194,8 +194,8 @@ export default {
         value: "id",
       },
       { text: "Nombre", value: "nombre" },
-      { text: "Primer Apellido", value: "apellido1" },
-      { text: "Segundo Apellido", value: "apellido2" },
+      { text: "Apellidos", value: "apellidos" },
+      
       { text: "DNI", value: "DNI" },
       { text: "Email", value: "email" },
       { text: "", value: "borrarButton" },
@@ -226,10 +226,8 @@ export default {
           "¿Esta seguro que desea eliminar al Empleado " +
           item.nombre +
           " " +
-          item.apellido1 +
-          " " +
-          item.apellido2 +
-          "?";
+          item.apellidos +
+          " ?";
         this.tipo = 0;
         this.elemento = item;
         this.dialog = true;
@@ -238,22 +236,16 @@ export default {
           "¿Esta seguro que desea eliminar al Cliente " +
           item.nombre +
           " " +
-          item.apellido1 +
-          " " +
-          item.apellido2 +
-          "? \n Esto eliminara tambien todos sus vehiculos";
+          item.apellidos +
+          " ? \n Esto eliminara tambien todos sus vehiculos";
         this.elemento = item;
         this.dialog = true;
         this.tipo = 1;
       } else if (numtabla == "2") {
         this.textoDialog =
-          "¿Esta seguro que desea eliminar al El vehiculo " +
-          item.marca +
-          " " +
-          item.modelo +
-          " " +
+          "¿Esta seguro que desea eliminar al el vehiculo con matricula: " +
           item.matricula +
-          "? \n Esto eliminara tambien todas sus reparaciones";
+          " ? \n Esto eliminara tambien todas sus reparaciones";
         this.elemento = item;
         this.dialog = true;
         this.tipo = 2;
@@ -326,6 +318,7 @@ export default {
               this.tipo_alerta = "error";
               this.alerta = true;
             } else {
+              
               this.alerta_msg = response.data.correcto;
               this.tipo_alerta = "success";
               this.alerta = true;

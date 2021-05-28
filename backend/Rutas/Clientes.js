@@ -71,7 +71,7 @@ router.post('/delete', (req, res) => {
         }
     }).then(respuesta => {
         if(respuesta==1){
-            res.json({ correcto: "Empleado eliminado correctamente" })
+            res.json({ correcto: "Cliente eliminado correctamente" })
         }else{
             res.json({ error: "No se ha podido eliminar al empleado" })
         }

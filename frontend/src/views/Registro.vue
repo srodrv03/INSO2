@@ -17,6 +17,7 @@
               <v-text-field
                 name="nombre"
                 v-model="nombre"
+                :rules="textRules"
                 label="Nombre"
                 id="nombre"
                 type="nombre"
@@ -29,6 +30,7 @@
               <v-text-field
                 name="apellidos"
                 v-model="apellidos"
+                :rules="textRules"
                 label="Apellidos"
                 id="apellidos"
                 type="apellidos"
@@ -53,6 +55,10 @@
             <v-row xs12 sm6>
               <v-text-field
                 v-model="password"
+                :rules="[
+                  (v) => !!v || 'La contraseña es necesaria.',
+                  (v) => v == this.password1 || 'Tiene que ser iguales',
+                ]"
                 name="password"
                 label="Contraseña"
                 id="password-sin"
@@ -121,8 +127,11 @@ export default {
     password1: "",
     emailRules: [
       (v) => !!v || "El e-mail es necesario.",
-      (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
+      (v) => /.+@.+\..+/.test(v) || "Formato invalido.",
     ],
+    textRules: [
+      v => !!v || 'Este campo es necesario.',
+    ]
   }),
   methods: {
     confirmaRegistro() {
