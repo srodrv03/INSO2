@@ -106,6 +106,7 @@ export default {
                 this.alerta_msg = "La contraseña/email no son correctos.";
                 this.alerta = true;
               } else {
+                this.setId(response.data.id)
                 this.logearse();
                 this.setEmail(this.email);
                 this.setTipo(this.tipo_user);

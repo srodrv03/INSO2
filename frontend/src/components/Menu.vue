@@ -59,6 +59,10 @@ export default {
           icon: "mdi-tools",
           title: "Reparaciones",
         },
+        {
+          icon: "mdi-clipboard-list-outline",
+          title: "Facturas",
+        },
         { icon: "mdi-account", title: "Cuenta" },
       ],
     };
@@ -72,6 +76,8 @@ export default {
         this.$router.push("/HomeCliente/Vehiculos");
       } else if (item.title == "Reparaciones") {
         this.$router.push("/HomeCliente/Reparaciones");
+      }else if (item.title == "Facturas") {
+        this.$router.push("/HomeCliente/Facturas");
       } else if (item.title == "Cuenta") {
         this.$router.push("/HomeCliente/cuenta");
       }

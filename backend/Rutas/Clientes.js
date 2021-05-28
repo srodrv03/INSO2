@@ -14,7 +14,7 @@ router.post("/login", (req, res) => {
         }
     }).then(user => {
         if(bcrypt.compareSync(req.body.pass, user.password)) {
-            res.json({ autorizacion: "correcto" })
+            res.json({ autorizacion: "correcto", id:user.id })
         }
         else {
             res.json({ error: "Datos incorrectos" })
@@ -71,7 +71,7 @@ router.post('/delete', (req, res) => {
         }
     }).then(respuesta => {
         if(respuesta==1){
-            res.json({ correcto: "Empleado eliminado correctamente" })
+            res.json({ correcto: "Cliente eliminado correctamente" })
         }else{
             res.json({ error: "No se ha podido eliminar al empleado" })
         }
