@@ -233,7 +233,6 @@ export default {
       { text: "Año de matriculacion", value: "anio" },
       { text: "", value: "reparacionButton" },
       { text: "", value: "borrarButton" },
-      { text: "", value: "editarButton" },
     ],
     listaVehiculos: [],
   }),

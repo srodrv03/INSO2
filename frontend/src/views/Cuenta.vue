@@ -102,7 +102,7 @@
                 class="font-weight-black"
                 outlined
                 color="black"
-                v-model="CP"
+                v-model="cp"
                 label="Código postal"
               ></v-text-field>
             </v-col>
@@ -164,7 +164,7 @@ export default {
     IBAN: "",
     direccion: "",
     localidad: "",
-    CP: "",
+    cp: "",
     pais: "",
     visible: false,
   }),
@@ -204,7 +204,7 @@ export default {
         IBAN: this.IBAN,
         direccion: this.direccion,
         localidad: this.localidad,
-        cp: this.CP,
+        cp: this.cp,
         pais: this.pais,
       };
       axios
@@ -215,6 +215,7 @@ export default {
           } else {
             this.visible = true;
             this.obtieneInformacion();
+            window.scrollTo(0,0);
           }
         });
     },

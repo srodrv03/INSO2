@@ -11,7 +11,7 @@
           <v-text-field
             v-model="searchReparacion"
             append-icon="mdi-magnify"
-            label="Introduce el modelo del Vehiculo..."
+            label="Introduce el identificador de la reparacion..."
             single-line
             hide-details
           ></v-text-field>

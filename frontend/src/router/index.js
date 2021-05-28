@@ -149,7 +149,7 @@ router.beforeEach((to, from, next) => {
   } else {
     next();
   }
-  if (to.matched.some(record => record.meta.admin)) {
+  if (to.matched.some(record => record.meta.add)) {
     if (store.state.tipousuario=="Empleado") {
       next({ path: '/HomeEmpleado/Listado' });
     }else if (store.state.tipousuario=="Cliente") {

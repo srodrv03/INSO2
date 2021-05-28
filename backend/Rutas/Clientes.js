@@ -96,7 +96,7 @@ router.post('/edita', (req,res) => {
         IBAN:req.body.IBAN,
         direccion:req.body.direccion,
         localidad:req.body.localidad,
-        cp:req.body.CP,
+        cp:req.body.cp,
         pais:req.body.pais
     }
 
@@ -115,7 +115,7 @@ router.post('/edita', (req,res) => {
                 IBAN:req.body.IBAN,
                 direccion:req.body.direccion,
                 localidad:req.body.localidad,
-                cp:req.body.CP,
+                cp:req.body.cp,
                 pais:req.body.pais
             }).then(user => {
                 res.json({resp:"correcto"})

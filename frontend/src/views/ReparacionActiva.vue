@@ -193,6 +193,8 @@ export default {
               /*response.data[i].createdAt = dayjs(
                 response.data[i].createdAt
               ).format("D MMMM, YYYY");*/
+              this.items=[]
+              this.reparaciones=[]
               if (
                 response.data[i].estado == "REPARANDO" &&
                 response.data[i].idEmpleado == this.id
@@ -235,11 +237,12 @@ export default {
           if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
             console.log(response.data);
           } else {
+            this.piezas= []
             for (var i of Object.keys(response.data)) {
               //this.piezas.push(response.data[i]);
               this.piezas.push({ nombre: response.data[i].nombre });
             }
-            console.log(this.piezas);
+          
           }
         });
     },
@@ -258,6 +261,8 @@ export default {
               //this.piezas.push(response.data[i]);
               this.piezas.push({ nombre: response.data[i].nombre });
             }
+            this.piezas=[]
+            this.e7=""
             this.obtenerListadoPiezas(userdata.idReparacion);
           }
         });
@@ -299,7 +304,7 @@ export default {
           if (Object.prototype.hasOwnProperty.call(response.data, "error")) {
             console.log(response.data);
           } else {
-            this.obtenerListado();
+            this.$router.push("/HomeEmpleado/Listado");
           }
         });
     },

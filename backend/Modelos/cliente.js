@@ -23,15 +23,19 @@ var Cliente = db.sequelize.define('clientes', {
       allowNull: true
     },
     email: {
-      type: Sequelize.STRING(20),
+      type: Sequelize.STRING(45),
       allowNull: true
     },
     localidad: {
-      type: Sequelize.STRING(20),
+      type: Sequelize.STRING(45),
       allowNull: true
     },
     direccion: {
-      type: Sequelize.STRING(20),
+      type: Sequelize.STRING(45),
+      allowNull: true
+    },
+    pais: {
+      type: Sequelize.STRING(45),
       allowNull: true
     },
     cp: {
@@ -42,10 +46,7 @@ var Cliente = db.sequelize.define('clientes', {
       type: Sequelize.STRING(50),
       allowNull: true
     },
-    usuario: {
-      type: Sequelize.STRING(20),
-      allowNull: true
-    },
+    
     password: {
       type: Sequelize.STRING(255),
       allowNull: true
